@@ -31,20 +31,19 @@
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
 $bdd->exec('SET NAMES utf8');
 
-if(isset($_POST['submit'])) {
+if(isset($_POST['submit']) && issert($_POST['login'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
 
-    $req = $bdd->query('SELECT mdp FROM DMO WHERE login = '.$login);
+    $req->bindParam(":identifiant", $login);
     $req->execute();
     $data = $req->fetch();
 
     if($data['mdp'] == $password) {
-		echo '<script>alert("Vous êtes connecté !");</script>';
         header('Location: Dmo.php');
     }
 	else {
-		echo '<script>alert("Login ou mot de passe incorrect !");</script>';
+	    header('Location: index.php');
 	}
 }
 ?>

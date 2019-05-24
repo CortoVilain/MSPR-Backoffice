@@ -8,10 +8,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/Pharmacies.css" />
+    <link rel="stylesheet" href="css/Topbar.css" />
 </head>
 <body>
 <header>
-    <nav class="nav nav-pills nav-justified">
+    <nav class="nav nav-pills nav-justified topbar">
         <a class="nav-item nav-link" href="Dmo.php">DMO</a>
         <a class="nav-item nav-link" href="Visites.php">Visites</a>
         <a class="nav-item nav-link active" href="#">Pharmacies</a>
