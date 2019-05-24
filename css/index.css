@@ -1,0 +1,37 @@
+html {
+    height: 100%
+}
+
+body {
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    background-color: aliceblue;
+}
+
+body .logo {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+body .formulaire {
+    width: 30%;
+    max-width: 30%;
+    height: 80%;
+    bottom: 0;
+    margin: 0 auto;
+    text-align: inherit;
+}
+
+form label {
+    float: left;
+}
+
+form input {
+    margin-bottom: 3%;
+}
+
+form #submit {
+     float: right;
+ }
