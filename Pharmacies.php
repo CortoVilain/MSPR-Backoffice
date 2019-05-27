@@ -21,8 +21,45 @@
         </a>
     </nav>
 </header>
-<a href="#" class="btn btn-primary">Ajouter une nouvelle pharmacie</a>
-<a href="#" class="btn btn-primary">Ajouter un nouveau pharmacien</a>
+<a href="#" class="btn btn-primary btn-ajout-pharmacie">Ajouter une nouvelle pharmacie</a>
+<table>
+    <tr class="tr-ajout-pharmacie">
+        <form class="form-ajout-pharmacie" method="post">
+            <td><input class="form-control" type="text" name="nom" /></td>
+            <td><input class="form-control" type="text" name="latitude" /></td>
+            <td><input class="form-control" type="text" name="longitude" /></td>
+            <td><input class="btn" type="submit" name="ajouter-pharmacie" value="Ajouter" /></td>
+        </form>
+        <td><a href="#" class="btn btn-primary btn-ajout-pharmacie-annuler">Annuler</a></td>
+    </tr>
+</table>
+<a href="#" class="btn btn-primary btn-ajout-pharmacien">Ajouter un nouveau pharmacien</a>
+<table>
+    <tr class="tr-ajout-pharmacien">
+        <form class="form-ajout-pharmacien" method="post">
+            <td><input class="form-control" type="text" name="prenom" /></td>
+            <td><input class="form-control" type="text" name="nom" /></td>
+            <td>
+                <select class="form-control" type="select" name="pharmacie">
+                    <?php
+                    $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
+                    $bdd->exec('SET NAMES utf8');
+
+                    $req = $bdd->prepare('SELECT * FROM Pharmacie');
+                    $req->execute();
+                    $data = $req->fetchAll();
+
+                    foreach($data as $value) {
+                    ?>
+                        <option value="<?php echo $value['idPharmacie'] ?>"><?php echo $value['nom'] ?></option>
+                    <?php } ?>
+                </select>
+            </td>
+            <td><input class="btn" type="submit" name="ajouter-pharmacien" value="Ajouter" /></td>
+        </form>
+        <td><a href="#" class="btn btn-primary btn-ajout-pharmacien-annuler">Annuler</a></td>
+    </tr>
+</table>
 <h3>Liste des DMOs</h3>
 <table>
     <tr>
@@ -52,8 +89,12 @@
                 <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['lattitude']; ?>" /></td>
                 <td><input class="form-control" type="text" name="nom" value="<?php echo $value['longitude']; ?>" /></td>
                 <?php
-                    foreach($data2 as $value2) { ?>
-                        <td><input class="form-control" type="text" name="password" value="<?php echo $value2['prenom'].' '.$value2['nom']; ?>" /></td><?php
+                    foreach($data2 as $value2) {
+                        if(!($value2 == null)) { ?>
+                            <td><input class="form-control" type="text" name="password" value="<?php echo $value2['prenom'].' '.$value2['nom']; ?>" /></td><?php
+                        } else { ?>
+                            <td>Aucun pharmacien</td><?php
+                        }
                     }
                 ?>
                 <td><input class="btn" type="submit" name="modifier" value="Modifier" /></td>
@@ -81,7 +122,7 @@ if(isset($_POST['modifier'])) {
     $req->bindParam(":id", $id);
     $req->execute();
 
-    header("Location: Dmo.php");
+    header("Location: Pharmacies.php");
 }
 
 if(isset($_POST['supprimer'])) {
@@ -92,7 +133,35 @@ if(isset($_POST['supprimer'])) {
     $req->bindParam(":id", $id);
     $req->execute();
 
-    header("Location: Dmo.php");
+    header("Location: Pharmacies.php");
+}
+
+if(isset($_POST['ajouter-pharmacie'])) {
+    $nom = $_POST['nom'];
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
+
+    $req = $bdd->prepare('INSERT INTO pharmacie(nom, lattitude, longitude) VALUES(:nom, :latitude, :longitude)');
+    $req->bindParam(":nom", $nom);
+    $req->bindParam(":latitude", $latitude);
+    $req->bindParam(":longitude", $longitude);
+    $req->execute();
+
+    header('Location: Pharmacies.php');
+}
+
+if(isset($_POST['ajouter-pharmacien'])) {
+    $prenom = $_POST['prenom'];
+    $nom = $_POST['nom'];
+    $pharmacie = $_POST['pharmacie'];
+
+    $req = $bdd->prepare('INSERT INTO pharmacien(prenom, nom, idPharmacie) VALUES(:prenom, :nom, :pharmacie)');
+    $req->bindParam(":prenom", $prenom);
+    $req->bindParam(":nom", $nom);
+    $req->bindParam(":pharmacie", $pharmacie);
+    $req->execute();
+
+    header('Location: Pharmacies.php');
 }
 
 ?>

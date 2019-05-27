@@ -31,6 +31,7 @@
             <td><input class="form-control" type="text" name="password" /></td>
             <td><input class="btn" type="submit" name="ajouter" value="Ajouter" /></td>
         </form>
+        <td><a href="#" class="btn btn-primary btn-ajout-annuler">Annuler</a></td>
     </tr>
 </table>
 <h3>Liste des DMOs</h3>
