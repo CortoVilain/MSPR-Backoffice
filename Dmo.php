@@ -21,7 +21,18 @@
         </a>
     </nav>
 </header>
-<a href="#" class="btn btn-primary">Créer un nouveau DMO</a>
+<a href="#" class="btn btn-primary btn-ajout">Ajouter un nouveau DMO</a>
+<table>
+    <tr class="tr-ajout">
+        <form class="form-ajout" method="post">
+            <td><input class="form-control" type="text" name="identifiant" /></td>
+            <td><input class="form-control" type="text" name="prenom" /></td>
+            <td><input class="form-control" type="text" name="nom" /></td>
+            <td><input class="form-control" type="text" name="password" /></td>
+            <td><input class="btn" type="submit" name="ajouter" value="Ajouter" /></td>
+        </form>
+    </tr>
+</table>
 <h3>Liste des DMOs</h3>
 <table>
     <tr>
@@ -30,6 +41,7 @@
         <td>Nom</td>
         <td>Mot de passe</td>
     </tr>
+
     <?php
     $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
     $bdd->exec('SET NAMES utf8');
@@ -40,15 +52,67 @@
 
     foreach($data as $value) { ?>
         <tr>
-            <td><?php echo $value['identifiant']; ?></td>
-            <td><?php echo $value['prenom']; ?></td>
-            <td><?php echo $value['nom']; ?></td>
-            <td><?php echo $value['mdp']; ?></td>
-            </tr><?php
+            <form class="form-group" method="post">
+                <input type="hidden" name="id" value="<?php echo $value['idDmo']; ?>" />
+                <td><input class="form-control" type="text" name="identifiant" value="<?php echo $value['identifiant']; ?>" /></td>
+                <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['prenom']; ?>" /></td>
+                <td><input class="form-control" type="text" name="nom" value="<?php echo $value['nom']; ?>" /></td>
+                <td><input class="form-control" type="text" name="password" value="<?php echo $value['mdp']; ?>" /></td>
+                <td><input class="btn" type="submit" name="modifier" value="Modifier" /></td>
+                <td><input class="btn" type="submit" name="supprimer" value="Supprimer" /></td>
+            </form>
+        </tr>
+        <?php
     }
     ?>
 </table>
+<?php
+if(isset($_POST['ajouter'])) {
+    $identifiant = $_POST['identifiant'];
+    $prenom = $_POST['prenom'];
+    $nom = $_POST['nom'];
+    $password = $_POST['password'];
 
+    $req = $bdd->prepare('INSERT INTO dmo(identifiant, prenom, nom, mdp) VALUES(:identifiant, :prenom, :nom, :mdp)');
+    $req->bindParam(":identifiant", $identifiant);
+    $req->bindParam(":prenom", $prenom);
+    $req->bindParam(":nom", $nom);
+    $req->bindParam(":mdp", $password);
+    $req->execute();
 
+    header('Location: Dmo.php');
+}
+
+if(isset($_POST['modifier'])) {
+    $id = $_POST['id'];
+    $identifiant = $_POST['identifiant'];
+    $prenom = $_POST['prenom'];
+    $nom = $_POST['nom'];
+    $password = $_POST['password'];
+
+    $req = $bdd->prepare('UPDATE dmo SET identifiant = :identifiant, prenom = :prenom, nom = :nom, mdp = :mdp WHERE idDmo = :id ');
+
+    $req->bindParam(":identifiant", $identifiant);
+    $req->bindParam(":prenom", $prenom);
+    $req->bindParam(":nom", $nom);
+    $req->bindParam(":mdp", $password);
+    $req->bindParam(":id", $id);
+    $req->execute();
+
+    header("Location: Dmo.php");
+}
+
+if(isset($_POST['supprimer'])) {
+    $id = $_POST['id'];
+
+    $req = $bdd->prepare('DELETE FROM dmo WHERE idDmo = :id ');
+
+    $req->bindParam(":id", $id);
+    $req->execute();
+
+    header("Location: Dmo.php");
+}
+?>
+<script type="text/javascript" src="js/Dmo.js"></script>
 </body>
 </html>

@@ -21,5 +21,80 @@
         </a>
     </nav>
 </header>
+<a href="#" class="btn btn-primary">Ajouter une nouvelle pharmacie</a>
+<a href="#" class="btn btn-primary">Ajouter un nouveau pharmacien</a>
+<h3>Liste des DMOs</h3>
+<table>
+    <tr>
+        <td>Nom</td>
+        <td>Latitude</td>
+        <td>Longitude</td>
+        <td>Utilisateurs</td>
+    </tr>
+    <?php
+    $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
+    $bdd->exec('SET NAMES utf8');
+
+    $req = $bdd->prepare('SELECT * FROM Pharmacie');
+    $req->execute();
+    $data = $req->fetchAll();
+
+    foreach($data as $value) {
+        $req2 = $bdd->prepare('SELECT * FROM Pharmacien WHERE idPharmacie = :idPharmacie');
+        $req2->BindParam(':idPharmacie', $value['idPharmacie']);
+        $req2->execute();
+        $data2 = $req2->fetchAll();
+        ?>
+        <tr>
+            <form class="form-group" method="post">
+                <input type="hidden" name="id" value="<?php echo $value['idPharmacie']; ?>" />
+                <td><input class="form-control" type="text" name="identifiant" value="<?php echo $value['nom']; ?>" /></td>
+                <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['lattitude']; ?>" /></td>
+                <td><input class="form-control" type="text" name="nom" value="<?php echo $value['longitude']; ?>" /></td>
+                <?php
+                    foreach($data2 as $value2) { ?>
+                        <td><input class="form-control" type="text" name="password" value="<?php echo $value2['prenom'].' '.$value2['nom']; ?>" /></td><?php
+                    }
+                ?>
+                <td><input class="btn" type="submit" name="modifier" value="Modifier" /></td>
+                <td><input class="btn" type="submit" name="supprimer" value="Supprimer" /></td>
+            </form>
+        </tr>
+        <?php
+    }
+    ?>
+</table>
+<?php
+if(isset($_POST['modifier'])) {
+    $id = $_POST['id'];
+    $identifiant = $_POST['identifiant'];
+    $prenom = $_POST['prenom'];
+    $nom = $_POST['nom'];
+    $password = $_POST['password'];
+
+    $req = $bdd->prepare('UPDATE dmo SET identifiant = :identifiant, prenom = :prenom, nom = :nom, mdp = :mdp WHERE idDmo = :id ');
+
+    $req->bindParam(":identifiant", $identifiant);
+    $req->bindParam(":prenom", $prenom);
+    $req->bindParam(":nom", $nom);
+    $req->bindParam(":mdp", $password);
+    $req->bindParam(":id", $id);
+    $req->execute();
+
+    header("Location: Dmo.php");
+}
+
+if(isset($_POST['supprimer'])) {
+    $id = $_POST['id'];
+
+    $req = $bdd->prepare('DELETE FROM dmo WHERE idDmo = :id ');
+
+    $req->bindParam(":id", $id);
+    $req->execute();
+
+    header("Location: Dmo.php");
+}
+
+?>
 </body>
 </html>
