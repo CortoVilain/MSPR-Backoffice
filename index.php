@@ -35,7 +35,8 @@ if(isset($_POST['submit']) && issert($_POST['login'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
 
-    $req->bindParam(":identifiant", $login);
+	$req = $bdd->prepare("SELECT mdp FROM dmo WHERE login = :login");
+    $req->bindParam(":login", $login);
     $req->execute();
     $data = $req->fetch();
 
