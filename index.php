@@ -31,7 +31,7 @@
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
 $bdd->exec('SET NAMES utf8');
 
-if(isset($_POST['submit']) && issert($_POST['login'])) {
+if(isset($_POST['submit']) && isset($_POST['login'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
 
