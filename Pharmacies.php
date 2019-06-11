@@ -86,7 +86,7 @@
             <form class="form-group" method="post">
                 <input type="hidden" name="id" value="<?php echo $value['idPharmacie']; ?>" />
                 <td><input class="form-control" type="text" name="identifiant" value="<?php echo $value['nom']; ?>" /></td>
-                <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['lattitude']; ?>" /></td>
+                <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['latitude']; ?>" /></td>
                 <td><input class="form-control" type="text" name="nom" value="<?php echo $value['longitude']; ?>" /></td>
                 <?php
                     foreach($data2 as $value2) {
@@ -141,7 +141,7 @@ if(isset($_POST['ajouter-pharmacie'])) {
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
 
-    $req = $bdd->prepare('INSERT INTO pharmacie(nom, lattitude, longitude) VALUES(:nom, :latitude, :longitude)');
+    $req = $bdd->prepare('INSERT INTO pharmacie(nom, latitude, longitude) VALUES(:nom, :latitude, :longitude)');
     $req->bindParam(":nom", $nom);
     $req->bindParam(":latitude", $latitude);
     $req->bindParam(":longitude", $longitude);
