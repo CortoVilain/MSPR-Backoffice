@@ -5,26 +5,48 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
 $bdd->exec('SET NAMES utf8');
 
 if(isset($_POST['modifier'])) {
-    $id = $_POST['id'];
-    $identifiant = $_POST['identifiant'];
-    $prenom = $_POST['prenom'];
+    $id = $_POST['idPharmacie'];
     $nom = $_POST['nom'];
-    $password = $_POST['password'];
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
 
-    $req = $bdd->prepare('UPDATE dmo SET identifiant = :identifiant, prenom = :prenom, nom = :nom, mdp = :mdp WHERE idDmo = :id ');
+    $req = $bdd->prepare('UPDATE pharmacie SET nom = :nom, latitude = :latitude, longitude = :longitude WHERE idPharmacie = :id ');
 
-    $req->bindParam(":identifiant", $identifiant);
-    $req->bindParam(":prenom", $prenom);
     $req->bindParam(":nom", $nom);
-    $req->bindParam(":mdp", $password);
+    $req->bindParam(":latitude", $latitude);
+    $req->bindParam(":longitude", $longitude);
     $req->bindParam(":id", $id);
     $req->execute();
 }
 
 if(isset($_POST['supprimer'])) {
-    $id = $_POST['id'];
+    $id = $_POST['idPharmacie'];
 
-    $req = $bdd->prepare('DELETE FROM dmo WHERE idDmo = :id ');
+    $req = $bdd->prepare('DELETE FROM pharmacie WHERE idPharmacie = :id ');
+
+    $req->bindParam(":id", $id);
+    $req->execute();
+}
+
+if(isset($_POST['modifierPharmacien'])) {
+    $id = $_POST['idPharmacien'];
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $pharmacie = $_POST['pharmacie'];
+
+    $req = $bdd->prepare('UPDATE pharmacien SET nom = :nom, prenom = :prenom, pharmacie = :pharmacie WHERE idPharmacien = :id ');
+
+    $req->bindParam(":nom", $nom);
+    $req->bindParam(":prenom", $prenom);
+    $req->bindParam(":pharmacie", $pharmacie);
+    $req->bindParam(":id", $id);
+    $req->execute();
+}
+
+if(isset($_POST['supprimerPharmacien'])) {
+    $id = $_POST['idPharmacien'];
+
+    $req = $bdd->prepare('DELETE FROM pharmacien WHERE idPharmacien = :id ');
 
     $req->bindParam(":id", $id);
     $req->execute();
@@ -77,23 +99,23 @@ if(isset($_POST['ajouter-pharmacien'])) {
     </nav>
 </header>
 <a href="#" class="btn btn-primary btn-ajout-pharmacie">Ajouter une nouvelle pharmacie</a>
+<a href="#" class="btn btn-primary btn-ajout-pharmacien">Ajouter un nouveau pharmacien</a>
 <table>
-    <tr class="tr-ajout-pharmacie">
+    <tr class="tr-ajout-pharmacie" style="display: none;">
         <form class="form-ajout-pharmacie" method="post" action="Pharmacies.php">
-            <td><input class="form-control" type="text" name="nom" /></td>
-            <td><input class="form-control" type="text" name="latitude" /></td>
-            <td><input class="form-control" type="text" name="longitude" /></td>
+            <td><input class="form-control" type="text" name="nom" placeholder="Nom"/></td>
+            <td><input class="form-control" type="text" name="latitude" placeholder="Latitude"/></td>
+            <td><input class="form-control" type="text" name="longitude" placeholder="Longitude"/></td>
             <td><input class="btn" type="submit" name="ajouter-pharmacie" value="Ajouter" /></td>
         </form>
         <td><a href="#" class="btn btn-primary btn-ajout-pharmacie-annuler">Annuler</a></td>
     </tr>
 </table>
-<a href="#" class="btn btn-primary btn-ajout-pharmacien">Ajouter un nouveau pharmacien</a>
 <table>
-    <tr class="tr-ajout-pharmacien">
+    <tr class="tr-ajout-pharmacien" style="display: none;">
         <form class="form-ajout-pharmacien" method="post" action="Pharmacies.php">
-            <td><input class="form-control" type="text" name="prenom" /></td>
-            <td><input class="form-control" type="text" name="nom" /></td>
+            <td><input class="form-control" type="text" name="prenom" placeholder="Prénom"/></td>
+            <td><input class="form-control" type="text" name="nom" placeholder="Nom"/></td>
             <td>
                 <select class="form-control" type="select" name="pharmacie">
                     <?php
@@ -136,10 +158,10 @@ if(isset($_POST['ajouter-pharmacien'])) {
         ?>
         <tr>
             <form class="form-group" method="post" action="Pharmacies.php">
-                <input type="hidden" name="id" value="<?php echo $value['idPharmacie']; ?>" />
-                <td><input class="form-control" type="text" name="identifiant" value="<?php echo $value['nom']; ?>" /></td>
-                <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['latitude']; ?>" /></td>
-                <td><input class="form-control" type="text" name="nom" value="<?php echo $value['longitude']; ?>" /></td>
+                <input type="hidden" name="idPharmacie" value="<?php echo $value['idPharmacie']; ?>" />
+                <td><input class="form-control" type="text" name="nom" value="<?php echo $value['nom']; ?>" /></td>
+                <td><input class="form-control" type="text" name="latitude" value="<?php echo $value['latitude']; ?>" /></td>
+                <td><input class="form-control" type="text" name="longitude" value="<?php echo $value['longitude']; ?>" /></td>
                 <?php
                 if(!($data2 == null)) { ?>
                 <td>
@@ -164,20 +186,27 @@ if(isset($_POST['ajouter-pharmacien'])) {
                                         </tr>
 
                                         <?php
-
-                                        $req3 = $bdd->prepare('SELECT * FROM pharmacien');
-                                        $req3->execute();
-                                        $data3 = $req3->fetchAll();
-
-                                        foreach($data3 as $value3) { ?>
+                                        foreach($data2 as $value2) { ?>
                                             <tr>
                                                 <form class="form-group" method="post" action="Pharmacies.php">
-                                                    <input type="hidden" name="id" value="<?php echo $value3['idPharmacien']; ?>" />
-                                                        <td><input class="form-control" type="text" name="prenom" value="<?php echo $value3['prenom']; ?>" /></td>
-                                                        <td><input class="form-control" type="text" name="nom" value="<?php echo $value3['nom']; ?>" /></td>
-                                                        <td><input class="form-control" type="text" name="pharmacie" value="<?php echo $value3['idPharmacie']; ?>" /></td>
-                                                        <td><input class="btn" type="submit" name="modifier" value="Modifier" /></td>
-                                                        <td><input class="btn" type="submit" name="supprimer" value="Supprimer" /></td>
+                                                    <input type="hidden" name="id" value="<?php echo $value2['idPharmacien']; ?>" />
+                                                        <td><input class="form-control" type="text" name="prenom" value="<?php echo $value2['prenom']; ?>" /></td>
+                                                        <td><input class="form-control" type="text" name="nom" value="<?php echo $value2['nom']; ?>" /></td>
+                                                        <td>
+                                                            <select class="form-control" type="select" name="pharmacie">
+                                                                <?php
+                                                                $req3 = $bdd->prepare('SELECT * FROM Pharmacie');
+                                                                $req3->execute();
+                                                                $data3 = $req3->fetchAll();
+
+                                                                foreach($data3 as $value3) {
+                                                                    ?>
+                                                                    <option value="<?php echo $value2['idPharmacie'] ?>"><?php echo $value3['nom'] ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </td>
+                                                        <td><input class="btn" type="submit" name="modifierPharmacien" value="Modifier" /></td>
+                                                        <td><input class="btn" type="submit" name="supprimerPharmacien" value="Supprimer" /></td>
                                                 </form>
                                             </tr>
                                             <?php
@@ -204,5 +233,6 @@ if(isset($_POST['ajouter-pharmacien'])) {
     }
     ?>
 </table>
+<script type="text/javascript" src="js/Pharmacie.js"></script>
 </body>
 </html>

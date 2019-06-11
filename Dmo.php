@@ -69,10 +69,10 @@ if(isset($_POST['supprimer'])) {
 <table>
     <tr class="tr-ajout">
         <form class="form-ajout" method="post" action="Dmo.php">
-            <td><input class="form-control" type="text" name="prenom" /></td>
-            <td><input class="form-control" type="text" name="nom" /></td>
-            <td><input class="form-control" type="text" name="login" /></td>
-            <td><input class="form-control" type="text" name="password" /></td>
+            <td><input class="form-control" type="text" name="prenom" placeholder="Prénom" /></td>
+            <td><input class="form-control" type="text" name="nom" placeholder="Nom"/></td>
+            <td><input class="form-control" type="text" name="login" placeholder="Login"/></td>
+            <td><input class="form-control" type="text" name="password" placeholder="Mot de passe"/></td>
             <td><input class="btn" type="submit" name="ajouter" value="Ajouter" /></td>
         </form>
         <td><a href="#" class="btn btn-primary btn-ajout-annuler">Annuler</a></td>
