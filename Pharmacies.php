@@ -58,10 +58,10 @@ if(isset($_POST['ajouter-pharmacien'])) {
 <head>
     <meta charset="UTF-8">
     <title>Administration : DMO</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/Pharmacies.css" />
     <link rel="stylesheet" href="css/Topbar.css" />
 </head>
@@ -118,7 +118,7 @@ if(isset($_POST['ajouter-pharmacien'])) {
         <td>Nom</td>
         <td>Latitude</td>
         <td>Longitude</td>
-        <td>Utilisateurs</td>
+        <td>Pharmacien</td>
     </tr>
     <?php
     $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
@@ -143,15 +143,54 @@ if(isset($_POST['ajouter-pharmacien'])) {
                 <?php
                 if(!($data2 == null)) { ?>
                 <td>
-                    <select class="form-control" type="select" name="pharmacien">
-                        <a href="Pharmaciens.php">
-                        <?php
-                        foreach($data2 as $value2) {
-                            ?>
-                            <option value="<?php echo $value2['prenom'] ?>"><?php echo $value2['prenom']." ".$value2['nom'] ?></option></a>
-                        <?php } ?>
-                        </a>
-                    </select>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal" data-backdrop="static">Liste pharmaciens</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Liste des pharamaciens</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table>
+                                        <tr>
+                                            <td>Prénom</td>
+                                            <td>Nom</td>
+                                            <td>Pharmacie</td>
+                                        </tr>
+
+                                        <?php
+
+                                        $req3 = $bdd->prepare('SELECT * FROM pharmacien');
+                                        $req3->execute();
+                                        $data3 = $req3->fetchAll();
+
+                                        foreach($data3 as $value3) { ?>
+                                            <tr>
+                                                <form class="form-group" method="post" action="Pharmacies.php">
+                                                    <input type="hidden" name="id" value="<?php echo $value3['idPharmacien']; ?>" />
+                                                        <td><input class="form-control" type="text" name="prenom" value="<?php echo $value3['prenom']; ?>" /></td>
+                                                        <td><input class="form-control" type="text" name="nom" value="<?php echo $value3['nom']; ?>" /></td>
+                                                        <td><input class="form-control" type="text" name="pharmacie" value="<?php echo $value3['idPharmacie']; ?>" /></td>
+                                                        <td><input class="btn" type="submit" name="modifier" value="Modifier" /></td>
+                                                        <td><input class="btn" type="submit" name="supprimer" value="Supprimer" /></td>
+                                                </form>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
                 <?php }
                 else { ?>
