@@ -4,43 +4,6 @@
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
 $bdd->exec('SET NAMES utf8');
 
-if(isset($_POST['modifier'])) {
-    $id = $_POST['id'];
-    $identifiant = $_POST['identifiant'];
-    $prenom = $_POST['prenom'];
-    $nom = $_POST['nom'];
-    $password = $_POST['password'];
-
-    $req = $bdd->prepare('UPDATE dmo SET identifiant = :identifiant, prenom = :prenom, nom = :nom, mdp = :mdp WHERE idDmo = :id ');
-
-    $req->bindParam(":identifiant", $identifiant);
-    $req->bindParam(":prenom", $prenom);
-    $req->bindParam(":nom", $nom);
-    $req->bindParam(":mdp", $password);
-    $req->bindParam(":id", $id);
-    $req->execute();
-}
-
-if(isset($_POST['supprimer'])) {
-    $id = $_POST['id'];
-
-    $req = $bdd->prepare('DELETE FROM dmo WHERE idDmo = :id ');
-
-    $req->bindParam(":id", $id);
-    $req->execute();
-}
-
-if(isset($_POST['ajouter-pharmacie'])) {
-    $nom = $_POST['nom'];
-    $latitude = $_POST['latitude'];
-    $longitude = $_POST['longitude'];
-
-    $req = $bdd->prepare('INSERT INTO pharmacie(nom, latitude, longitude) VALUES(:nom, :latitude, :longitude)');
-    $req->bindParam(":nom", $nom);
-    $req->bindParam(":latitude", $latitude);
-    $req->bindParam(":longitude", $longitude);
-    $req->execute();
-}
 
 if(isset($_POST['ajouter-pharmacien'])) {
     $prenom = $_POST['prenom'];
@@ -76,18 +39,6 @@ if(isset($_POST['ajouter-pharmacien'])) {
         </a>
     </nav>
 </header>
-<a href="#" class="btn btn-primary btn-ajout-pharmacie">Ajouter une nouvelle pharmacie</a>
-<table>
-    <tr class="tr-ajout-pharmacie">
-        <form class="form-ajout-pharmacie" method="post" action="Pharmacies.php">
-            <td><input class="form-control" type="text" name="nom" /></td>
-            <td><input class="form-control" type="text" name="latitude" /></td>
-            <td><input class="form-control" type="text" name="longitude" /></td>
-            <td><input class="btn" type="submit" name="ajouter-pharmacie" value="Ajouter" /></td>
-        </form>
-        <td><a href="#" class="btn btn-primary btn-ajout-pharmacie-annuler">Annuler</a></td>
-    </tr>
-</table>
 <a href="#" class="btn btn-primary btn-ajout-pharmacien">Ajouter un nouveau pharmacien</a>
 <table>
     <tr class="tr-ajout-pharmacien">
@@ -97,12 +48,12 @@ if(isset($_POST['ajouter-pharmacien'])) {
             <td>
                 <select class="form-control" type="select" name="pharmacie">
                     <?php
-                    $req = $bdd->prepare('SELECT * FROM Pharmacie');
+                    $req = $bdd->prepare('SELECT * FROM Pharmacien');
                     $req->execute();
                     $data = $req->fetchAll();
 
                     foreach($data as $value) {
-                    ?>
+                        ?>
                         <option value="<?php echo $value['idPharmacie'] ?>"><?php echo $value['nom'] ?></option>
                     <?php } ?>
                 </select>
@@ -112,51 +63,29 @@ if(isset($_POST['ajouter-pharmacien'])) {
         <td><a href="#" class="btn btn-primary btn-ajout-pharmacien-annuler">Annuler</a></td>
     </tr>
 </table>
-<h3>Liste des pharmacies</h3>
+<h3>Liste des pharmaciens</h3>
 <table>
     <tr>
         <td>Nom</td>
-        <td>Latitude</td>
-        <td>Longitude</td>
-        <td>Utilisateurs</td>
+        <td>Prénom</td>
+        <td>Pharmacie</td>
     </tr>
     <?php
     $bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
     $bdd->exec('SET NAMES utf8');
 
-    $req = $bdd->prepare('SELECT * FROM Pharmacie');
+    $req = $bdd->prepare('SELECT * FROM Pharmacien');
     $req->execute();
     $data = $req->fetchAll();
 
     foreach($data as $value) {
-        $req2 = $bdd->prepare('SELECT * FROM Pharmacien WHERE idPharmacie = :idPharmacie');
-        $req2->BindParam(':idPharmacie', $value['idPharmacie']);
-        $req2->execute();
-        $data2 = $req2->fetchAll();
         ?>
         <tr>
             <form class="form-group" method="post" action="Pharmacies.php">
-                <input type="hidden" name="id" value="<?php echo $value['idPharmacie']; ?>" />
-                <td><input class="form-control" type="text" name="identifiant" value="<?php echo $value['nom']; ?>" /></td>
-                <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['latitude']; ?>" /></td>
-                <td><input class="form-control" type="text" name="nom" value="<?php echo $value['longitude']; ?>" /></td>
-                <?php
-                if(!($data2 == null)) { ?>
-                <td>
-                    <select class="form-control" type="select" name="pharmacien">
-                        <a href="Pharmaciens.php">
-                        <?php
-                        foreach($data2 as $value2) {
-                            ?>
-                            <option value="<?php echo $value2['prenom'] ?>"><?php echo $value2['prenom']." ".$value2['nom'] ?></option></a>
-                        <?php } ?>
-                        </a>
-                    </select>
-                </td>
-                <?php }
-                else { ?>
-                    <td>Aucun Pharmacien</td>
-                <?php } ?>
+                <input type="hidden" name="id" value="<?php echo $value['idPharmacien']; ?>" />
+                <td><input class="form-control" type="text" name="nom" value="<?php echo $value['nom']; ?>" /></td>
+                <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['prenom']; ?>" /></td>
+                <td><input class="form-control" type="text" name="pharmacie" value="<?php echo $value['idPharmacie']; ?>" /></td>
                 <td><input class="btn" type="submit" name="modifier" value="Modifier" /></td>
                 <td><input class="btn" type="submit" name="supprimer" value="Supprimer" /></td>
             </form>
