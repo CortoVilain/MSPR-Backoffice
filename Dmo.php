@@ -73,9 +73,9 @@ if(isset($_POST['supprimer'])) {
             <td><input class="form-control" type="text" name="nom" placeholder="Nom"/></td>
             <td><input class="form-control" type="text" name="login" placeholder="Login"/></td>
             <td><input class="form-control" type="text" name="password" placeholder="Mot de passe"/></td>
-            <td><input class="btn" type="submit" name="ajouter" value="Ajouter" /></td>
+            <td><input class="btn btn-success" type="submit" name="ajouter" value="Ajouter" /></td>
         </form>
-        <td><a href="#" class="btn btn-primary btn-ajout-annuler">Annuler</a></td>
+        <td><a href="#" class="btn btn-secondary btn-ajout-annuler">Annuler</a></td>
     </tr>
 </table>
 <h3>Liste des DMOs</h3>
@@ -101,8 +101,8 @@ if(isset($_POST['supprimer'])) {
                 <td><input class="form-control" type="text" name="nom" value="<?php echo $value['nom']; ?>" /></td>
                 <td><input class="form-control" type="text" name="login" value="<?php echo $value['login']; ?>" /></td>
                 <td><input class="form-control" type="text" name="password" value="<?php echo $value['mdp']; ?>" /></td>
-                <td><input class="btn" type="submit" name="modifier" value="Modifier" /></td>
-                <td><input class="btn" type="submit" name="supprimer" value="Supprimer" /></td>
+                <td><input class="btn btn-warning" type="submit" name="modifier" value="Modifier" /></td>
+                <td><input class="btn btn-danger" type="submit" name="supprimer" value="Supprimer" /></td>
             </form>
         </tr>
         <?php
