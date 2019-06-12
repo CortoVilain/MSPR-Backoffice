@@ -30,12 +30,12 @@ if(isset($_POST['supprimer'])) {
 }
 
 if(isset($_POST['modifierPharmacien'])) {
-    $id = $_POST['idPharmacien'];
+    $id = $_POST['id'];
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $pharmacie = $_POST['pharmacie'];
 
-    $req = $bdd->prepare('UPDATE pharmacien SET nom = :nom, prenom = :prenom, pharmacie = :pharmacie WHERE idPharmacien = :id ');
+    $req = $bdd->prepare('UPDATE pharmacien SET nom = :nom, prenom = :prenom, idPharmacie = :pharmacie WHERE idPharmacien = :id ');
 
     $req->bindParam(":nom", $nom);
     $req->bindParam(":prenom", $prenom);
@@ -45,7 +45,7 @@ if(isset($_POST['modifierPharmacien'])) {
 }
 
 if(isset($_POST['supprimerPharmacien'])) {
-    $id = $_POST['idPharmacien'];
+    $id = $_POST['id'];
 
     $req = $bdd->prepare('DELETE FROM pharmacien WHERE idPharmacien = :id ');
 
@@ -78,6 +78,9 @@ if(isset($_POST['ajouter-pharmacien'])) {
 }
 
 ?>
+
+<!-- Le HTML -->
+
 <head>
     <meta charset="UTF-8">
     <title>Administration : DMO</title>
@@ -145,25 +148,27 @@ if(isset($_POST['ajouter-pharmacien'])) {
     </tr>
     <?php
 
+    //Je récupère toutes les Pharmacies
     $req = $bdd->prepare('SELECT * FROM Pharmacie');
     $req->execute();
     $data = $req->fetchAll();
 
     foreach($data as $value) {
+        //Pour chaque pharmacie je récupère tous les pharmaciens associés 
         $req2 = $bdd->prepare('SELECT * FROM Pharmacien WHERE idPharmacie = :idPharmacie');
         $req2->BindParam(':idPharmacie', $value['idPharmacie']);
         $req2->execute();
         $data2 = $req2->fetchAll();
         ?>
         <tr>
-            <form class="form-group" method="post" action="Pharmacies.php">
+            <form class="form-group" method="post" action="">
                 <input type="hidden" name="idPharmacie" value="<?php echo $value['idPharmacie']; ?>" />
                 <td><input class="form-control" type="text" name="nom" value="<?php echo $value['nom']; ?>" /></td>
                 <td><input class="form-control" type="text" name="latitude" value="<?php echo $value['latitude']; ?>" /></td>
                 <td><input class="form-control" type="text" name="longitude" value="<?php echo $value['longitude']; ?>" /></td>
                 <?php
                 if(!($data2 == null)) { ?>
-                <td>
+               <!-- <td>
                     <select class="form-control" type="select" name="pharmacien">
                         <?php
 
@@ -172,12 +177,38 @@ if(isset($_POST['ajouter-pharmacien'])) {
                             <option value="<?php echo $value['idPharmacie'] ?>"><?php echo $value2['prenom'].' '.$value2['nom'] ?></option>
                         <?php } ?>
                     </select>
-                </td>
-                <!-- <td>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal" data-backdrop="static">Liste pharmaciens</button>
+                </td>-->
+                 <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal<?php echo $value['idPharmacie'] ?>">Liste pharmaciens</button></td>
+                <?php }
+                else { ?>
+                    <td>Aucun Pharmacien</td>
+                <?php } ?>
 
+                <td><button class="btn btn-warning" type="submit" name="modifier">Modifier</button></td>
+                <td><input class="btn btn-danger" type="submit" name="supprimer" value="Supprimer" /></td>
+            </form>
+        </tr>
+        <?php
+    }
+    ?>
+</table>
 
-                    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Le Modal -->
+<?php
+//Je récupère toutes les Pharmacies
+    $reqoui = $bdd->prepare('SELECT * FROM Pharmacie');
+    $reqoui->execute();
+    $datasa = $reqoui->fetchAll();
+
+    foreach($datasa as $value) {
+        //Pour chaque pharmacie je récupère tous les pharmaciens associés 
+        $reqkoi = $bdd->prepare('SELECT * FROM Pharmacien WHERE idPharmacie = :idPharmacie');
+        $reqkoi->BindParam(':idPharmacie', $value['idPharmacie']);
+        $reqkoi->execute();
+        $dataseb = $reqkoi->fetchAll();
+?>
+
+<div class="modal fade" id="modal<?php echo $value['idPharmacie'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -195,9 +226,9 @@ if(isset($_POST['ajouter-pharmacien'])) {
                                         </tr>
 
                                         <?php
-                                        foreach($data2 as $value2) { ?>
+                                        foreach($dataseb as $value2) { ?>
                                             <tr>
-                                                <form class="form-group" method="post" action="#">
+                                                <form class="form-group" method="post" action="">
                                                     <input type="hidden" name="id" value="<?php echo $value2['idPharmacien']; ?>" />
                                                         <td><input class="form-control" type="text" name="prenom" value="<?php echo $value2['prenom']; ?>" /></td>
                                                         <td><input class="form-control" type="text" name="nom" value="<?php echo $value2['nom']; ?>" /></td>
@@ -214,8 +245,8 @@ if(isset($_POST['ajouter-pharmacien'])) {
                                                                 <?php } ?>
                                                             </select>
                                                         </td>
-                                                        <td><input class="btn btn-warning" type="submit" name="modifierPharmacien" value="Modifier" /></td>
-                                                        <td><input class="btn btn-danger" type="submit" name="supprimerPharmacien" value="Supprimer" /></td>
+                                                        <td><button class="btn btn-warning" type="submit" name="modifierPharmacien">Modifier</td>
+                                                        <td><button class="btn btn-danger" type="submit" name="supprimerPharmacien">Supprimer</td>
                                                 </form>
                                             </tr>
                                             <?php
@@ -229,19 +260,7 @@ if(isset($_POST['ajouter-pharmacien'])) {
                             </div>
                         </div>
                     </div>
-                </td> -->
-                <?php }
-                else { ?>
-                    <td>Aucun Pharmacien</td>
-                <?php } ?>
-                <td><input class="btn btn-warning" type="submit" name="modifier" value="Modifier" /></td>
-                <td><input class="btn btn-danger" type="submit" name="supprimer" value="Supprimer" /></td>
-            </form>
-        </tr>
-        <?php
-    }
-    ?>
-</table>
+                                    <?php } ?>
 <script type="text/javascript" src="js/Pharmacie.js"></script>
 </body>
 </html>
