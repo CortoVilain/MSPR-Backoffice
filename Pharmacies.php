@@ -96,7 +96,7 @@ if(isset($_POST['ajouter-pharmacien'])) {
     <nav class="nav nav-pills nav-justified topbar">
         <a class="nav-item nav-link" href="Dmo.php">DMO</a>
         <a class="nav-item nav-link" href="Visites.php">Visites</a>
-        <a class="nav-item nav-link active" href="#">Pharmacies</a>
+        <a class="nav-item nav-link active" href="Pharmacies.php">Pharmacies</a>
         <a class="nav-item nav-link disabled" href="#">
             <img src="images/logo_nivantis.png" />
         </a>
@@ -168,16 +168,6 @@ if(isset($_POST['ajouter-pharmacien'])) {
                 <td><input class="form-control" type="text" name="longitude" value="<?php echo $value['longitude']; ?>" /></td>
                 <?php
                 if(!($data2 == null)) { ?>
-               <!-- <td>
-                    <select class="form-control" type="select" name="pharmacien">
-                        <?php
-
-                        foreach($data2 as $value2) {
-                            ?>
-                            <option value="<?php echo $value['idPharmacie'] ?>"><?php echo $value2['prenom'].' '.$value2['nom'] ?></option>
-                        <?php } ?>
-                    </select>
-                </td>-->
                  <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal<?php echo $value['idPharmacie'] ?>">Liste pharmaciens</button></td>
                 <?php }
                 else { ?>

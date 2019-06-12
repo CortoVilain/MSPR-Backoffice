@@ -57,7 +57,7 @@ if(isset($_POST['supprimer'])) {
 <body>
 <header>
     <nav class="nav nav-pills nav-justified topbar">
-        <a class="nav-item nav-link active" href="#">DMO</a>
+        <a class="nav-item nav-link active" href="Dmo.php">DMO</a>
         <a class="nav-item nav-link" href="Visites.php">Visites</a>
         <a class="nav-item nav-link" href="Pharmacies.php">Pharmacies</a>
         <a class="nav-item nav-link disabled" href="#">
