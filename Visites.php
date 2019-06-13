@@ -12,12 +12,7 @@ if (isset($_POST['modifier'])) {
     $formulaire = $_POST['formulaire'];
     $pharmacie = $_POST['pharmacie'];
 
-    $req = $bdd->prepare('UPDATE visite 
-                                  SET dateVisite = :dateVisite, 
-                                  idDmo = (select idDmo from dmo where login = :dmo), 
-                                  idFormulaire = (select idFormulaire from formulaire where nom = :formulaire), 
-                                  idPharmacie = (select idPharmacie from pharmacie where nom = :pharmacie) 
-                                  WHERE idVisite = :id ');
+    $req = $bdd->prepare('UPDATE visite SET dateVisite = :dateVisite, idDmo = :dmo, idFormulaire = :formulaire, idPharmacie = :pharmacie WHERE idVisite = :id ');
 
     $req->bindParam(":dateVisite", $dateVisite);
     $req->bindParam(":dmo", $dmo);
@@ -211,7 +206,7 @@ $data = $req->fetchAll();
         <td><a href="#" class="btn btn-secondary btn-ajout-visite-annuler">Annuler</a></td>
     </tr>
 </table>
-<h3>Liste des pharmacies</h3>
+<h3>Liste des visites</h3>
 <table>
     <tr>
         <td>Date</td>
@@ -225,15 +220,81 @@ $data = $req->fetchAll();
     $req->execute();
     $data = $req->fetchAll();
 
-    foreach($data as $value) {;
+    foreach($data as $value) {
         ?>
         <tr>
             <form class="form-group" method="post" action="Visites.php">
                 <input type="hidden" name="idVisite" value="<?php echo $value['idVisite']; ?>" />
                 <td><input class="form-control" type="date" name="dateVisite" value="<?php echo $value['dateVisite']; ?>" /></td>
-                <td><input class="form-control" type="text" name="pharmacie" value="<?php echo $value[6]; // nom de la pharmacie?>" /></td>
-                <td><input class="form-control" type="text" name="dmo" value="<?php echo $value['login']?>" /></td>
-                <td><input class="form-control" type="text" name="formulaire" value="<?php echo $value[15]; // nom du formulaire?>" /></td>
+                <td>
+                    <select class="form-control" type="select" name="pharmacie">
+                        <?php
+                        $req2 = $bdd->prepare('SELECT * FROM Pharmacie WHERE idPharmacie = :idPharmacie');
+                        $req2->BindParam(':idPharmacie', $value['idPharmacie']);
+                        $req2->execute();
+                        $data2 = $req2->fetchAll();
+
+                        foreach($data2 as $value2) {
+                        ?>
+                        <option value="<?php echo $value2['idPharmacie'] ?>"><?php echo $value2['nom'] ?></option>
+                        <?php }
+                        $req3 = $bdd->prepare('SELECT * FROM Pharmacie WHERE idPharmacie != :idPharmacie');
+                        $req3->BindParam(':idPharmacie', $value['idPharmacie']);
+                        $req3->execute();
+                        $data3 = $req3->fetchAll();
+
+                        foreach($data3 as $value3) {
+                            ?>
+                            <option value="<?php echo $value3['idPharmacie'] ?>"><?php echo $value3['nom'] ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" type="select" name="dmo">
+                        <?php
+                        $req2 = $bdd->prepare('SELECT * FROM dmo WHERE idDmo = :idDmo');
+                        $req2->BindParam(':idDmo', $value['idDmo']);
+                        $req2->execute();
+                        $data2 = $req2->fetchAll();
+
+                        foreach($data2 as $value2) {
+                            ?>
+                            <option value="<?php echo $value2['idDmo'] ?>"><?php echo $value2['login'] ?></option>
+                        <?php }
+                        $req3 = $bdd->prepare('SELECT * FROM dmo WHERE idDmo != :idDmo');
+                        $req3->BindParam(':idDmo', $value['idDmo']);
+                        $req3->execute();
+                        $data3 = $req3->fetchAll();
+
+                        foreach($data3 as $value3) {
+                            ?>
+                            <option value="<?php echo $value3['idDmo'] ?>"><?php echo $value3['login'] ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" type="select" name="formulaire">
+                        <?php
+                        $req2 = $bdd->prepare('SELECT * FROM formulaire WHERE idFormulaire = :idFormulaire');
+                        $req2->BindParam(':idFormulaire', $value['idFormulaire']);
+                        $req2->execute();
+                        $data2 = $req2->fetchAll();
+
+                        foreach($data2 as $value2) {
+                            ?>
+                            <option value="<?php echo $value2['idFormulaire'] ?>"><?php echo $value2['nom'] ?></option>
+                        <?php }
+                        $req3 = $bdd->prepare('SELECT * FROM formulaire WHERE idFormulaire != :idFormulaire');
+                        $req3->BindParam(':idFormulaire', $value['idFormulaire']);
+                        $req3->execute();
+                        $data3 = $req3->fetchAll();
+
+                        foreach($data3 as $value3) {
+                            ?>
+                            <option value="<?php echo $value3['idFormulaire'] ?>"><?php echo $value3['nom'] ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
                 <td><button class="btn btn-warning" type="submit" name="modifier">Modifier</button></td>
                 <td><input class="btn btn-danger" type="submit" name="supprimer" value="Supprimer" /></td>
             </form>
