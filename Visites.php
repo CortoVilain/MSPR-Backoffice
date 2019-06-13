@@ -31,30 +31,6 @@ if(isset($_POST['supprimer'])) {
     $req->execute();
 }
 
-if(isset($_POST['modifierPharmacien'])) {
-    $id = $_POST['id'];
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $pharmacie = $_POST['pharmacie'];
-
-    $req = $bdd->prepare('UPDATE pharmacien SET nom = :nom, prenom = :prenom, idPharmacie = :pharmacie WHERE idPharmacien = :id ');
-
-    $req->bindParam(":nom", $nom);
-    $req->bindParam(":prenom", $prenom);
-    $req->bindParam(":pharmacie", $pharmacie);
-    $req->bindParam(":id", $id);
-    $req->execute();
-}
-
-if(isset($_POST['supprimerPharmacien'])) {
-    $id = $_POST['id'];
-
-    $req = $bdd->prepare('DELETE FROM pharmacien WHERE idPharmacien = :id ');
-
-    $req->bindParam(":id", $id);
-    $req->execute();
-}
-
 if(isset($_POST['ajouter-visite'])) {
     $dateVisite = $_POST['dateVisite'];
     $pharmacie = $_POST['pharmacie'];
@@ -66,18 +42,6 @@ if(isset($_POST['ajouter-visite'])) {
     $req->bindParam(":pharmacie", $pharmacie);
     $req->bindParam(":dmo", $dmo);
     $req->bindParam(":formulaire", $formulaire);
-    $req->execute();
-}
-
-if(isset($_POST['ajouter-pharmacien'])) {
-    $prenom = $_POST['prenom'];
-    $nom = $_POST['nom'];
-    $pharmacie = $_POST['pharmacie'];
-
-    $req = $bdd->prepare('INSERT INTO pharmacien(prenom, nom, idPharmacie) VALUES(:prenom, :nom, :pharmacie)');
-    $req->bindParam(":prenom", $prenom);
-    $req->bindParam(":nom", $nom);
-    $req->bindParam(":pharmacie", $pharmacie);
     $req->execute();
 }
 
@@ -107,55 +71,8 @@ if(isset($_POST['ajouter-pharmacien'])) {
     </nav>
 </header>
 <a href="#" class="btn btn-primary btn-ajout-visite">Ajouter une nouvelle visite</a>
-<a href="#" class="btn btn-primary btn-ajout-questionnaire">Ajouter un nouveau formulaire</a>
+<a href="#" class="btn btn-primary btn-ajout-questionnaire" data-toggle="modal" data-target="#formulaire">Ajouter un nouveau formulaire</a>
 <a href="#" class="btn btn-primary btn-affichage-visite" data-toggle="modal" data-target="#visite">Visites passées</a>
-<?php
-//Je récupère toutes les Pharmacies
-$req = $bdd->prepare('SELECT * FROM Visite LEFT JOIN pharmacie on pharmacie.idPharmacie = visite.idPharmacie LEFT JOIN dmo on dmo.idDmo = visite.idDmo LEFT JOIN formulaire on formulaire.idFormulaire = visite.idFormulaire WHERE dateVisite < cast(now() as date)');
-$req->execute();
-$data = $req->fetchAll();
-?>
-
-<div class="modal fade" id="visite" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Liste des visites passées</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="modal-body">
-                <table>
-                    <tr>
-                        <td>Date</td>
-                        <td>Pharmacie</td>
-                        <td>Dmo</td>
-                        <td>Formulaire</td>
-                    </tr>
-
-                    <?php
-                    foreach($data as $value) { ?>
-                        <tr>
-                            <form class="form-group" method="post" action="Visites.php">
-                                <input type="hidden" name="idVisite" value="<?php echo $value['idVisite']; ?>" />
-                                <td type="date" name="dateVisite"><?php echo $value['dateVisite']; ?></td>
-                                <td type="text" name="pharmacie"><?php echo $value[6]; // nom de la pharmacie?></td>
-                                <td type="text" name="dmo"><?php echo $value['login']?></td>
-                                <td type="text" name="formulaire"><?php echo $value[15]; // nom du formulaire?></td>
-                            </form>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 <table>
     <tr class="tr-ajout-visite" style="display: none;">
         <form class="form-ajout-visite" method="post" action="Visites.php">
@@ -193,13 +110,16 @@ $data = $req->fetchAll();
                     $data = $req->fetchAll();
                 if($data == null){ ?>
                     <a href="#" class="btn btn-primary btn-ajout-questionnaire">Créer le premier formulaire</a>
-                <?php }else{
+                <?php }
+                else { ?>
+                    <select class="form-control" type="select" name="formulaire">
+                <?php
                 foreach($data as $value) {
                 ?>
-                <select class="form-control" type="select" name="formulaire">
-                    <option value="<?php echo $value['idFormulaire'] ?>"><?php echo $value['nom']?></option>
-                </select>
-                <?php } }?>
+                        <option value="<?php echo $value['idFormulaire'] ?>"><?php echo $value['nom']?></option>
+                <?php } ?>
+                    </select>
+                <?php }?>
             </td>
             <td><input class="btn btn-success" type="submit" name="ajouter-visite" value="Ajouter" /></td>
         </form>
@@ -303,6 +223,100 @@ $data = $req->fetchAll();
     }
     ?>
 </table>
+<?php
+//modal visite passée
+$req = $bdd->prepare('SELECT * FROM Visite LEFT JOIN pharmacie on pharmacie.idPharmacie = visite.idPharmacie LEFT JOIN dmo on dmo.idDmo = visite.idDmo LEFT JOIN formulaire on formulaire.idFormulaire = visite.idFormulaire WHERE dateVisite < cast(now() as date)');
+$req->execute();
+$data = $req->fetchAll();
+?>
+
+<div class="modal fade" id="visite" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Liste des visites passées</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-body">
+                <table>
+                    <tr>
+                        <td>Date</td>
+                        <td>Pharmacie</td>
+                        <td>Dmo</td>
+                        <td>Formulaire</td>
+                    </tr>
+
+                    <?php
+                    foreach($data as $value) { ?>
+                        <tr>
+                            <form class="form-group" method="post" action="Visites.php">
+                                <input type="hidden" name="idVisite" value="<?php echo $value['idVisite']; ?>" />
+                                <td type="date" name="dateVisite"><?php echo $value['dateVisite']; ?></td>
+                                <td type="text" name="pharmacie"><?php echo $value[6]; // nom de la pharmacie?></td>
+                                <td type="text" name="dmo"><?php echo $value['login']?></td>
+                                <td type="text" name="formulaire"><?php echo $value[15]; // nom du formulaire?></td>
+                            </form>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal formulaire -->
+
+<div class="modal fade" id="formulaire" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau formulaire</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-body">
+            <table>
+                <tr>
+                    <td>Question</td>
+                    <td>Type de question</td>
+                    <td>Réponse</td>
+                </tr>
+                <tr>
+                <form class="form-ajout-visite" method="post" action="Visites.php" id="form">
+                    <td><textarea class="form-control" rows="1"  name="question"></textarea></td>
+                    <td>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button" id="simple">Simple</button>
+                                <button class="btn btn-outline-secondary" type="button" id="multiple">Multiple</button>
+                                <button class="btn btn-outline-secondary" type="button" id="libre">Libre</button>
+                            </div>
+                        </div>
+                    </td>
+                    <td id="idTd">
+
+                    </td>
+                    <td><input class="btn btn-success" type="submit" name="ajouter-formulaire" value="Ajouter"  id="ajouter"/></td>
+                </form>
+                </tr>
+            </table>
+                <div id="reponse">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="js/Visite.js"></script>
 </body>
 </html>
