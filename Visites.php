@@ -6,24 +6,31 @@ $bdd->exec('SET NAMES utf8');
 
 
 if (isset($_POST['modifier'])) {
-    $id = $_POST['idPharmacie'];
-    $nom = $_POST['nom'];
-    $latitude = $_POST['latitude'];
-    $longitude = $_POST['longitude'];
+    $id = $_POST['idVisite'];
+    $dateVisite = $_POST['dateVisite'];
+    $dmo = $_POST['dmo'];
+    $formulaire = $_POST['formulaire'];
+    $pharmacie = $_POST['pharmacie'];
 
-    $req = $bdd->prepare('UPDATE pharmacie SET nom = :nom, latitude = :latitude, longitude = :longitude WHERE idPharmacie = :id ');
+    $req = $bdd->prepare('UPDATE visite 
+                                  SET dateVisite = :dateVisite, 
+                                  idDmo = (select idDmo from dmo where login = :dmo), 
+                                  idFormulaire = (select idFormulaire from formulaire where nom = :formulaire), 
+                                  idPharmacie = (select idPharmacie from pharmacie where nom = :pharmacie) 
+                                  WHERE idVisite = :id ');
 
-    $req->bindParam(":nom", $nom);
-    $req->bindParam(":latitude", $latitude);
-    $req->bindParam(":longitude", $longitude);
+    $req->bindParam(":dateVisite", $dateVisite);
+    $req->bindParam(":dmo", $dmo);
+    $req->bindParam(":formulaire", $formulaire);
+    $req->bindParam(":pharmacie", $pharmacie);
     $req->bindParam(":id", $id);
     $req->execute();
 }
 
 if(isset($_POST['supprimer'])) {
-    $id = $_POST['idPharmacie'];
+    $id = $_POST['idVisite'];
 
-    $req = $bdd->prepare('DELETE FROM pharmacie WHERE idPharmacie = :id ');
+    $req = $bdd->prepare('DELETE FROM visite WHERE idVisite = :id ');
 
     $req->bindParam(":id", $id);
     $req->execute();
@@ -54,14 +61,16 @@ if(isset($_POST['supprimerPharmacien'])) {
 }
 
 if(isset($_POST['ajouter-visite'])) {
-    $date = $_POST['date'];
+    $dateVisite = $_POST['dateVisite'];
     $pharmacie = $_POST['pharmacie'];
     $dmo = $_POST['dmo'];
+    $formulaire = $_POST['formulaire'];
 
-    $req = $bdd->prepare('INSERT INTO visite(date, idPharmacie, idDmo) VALUES(:date, :pharmacie, :dmo)');
-    $req->bindParam(":date", $date);
+    $req = $bdd->prepare('INSERT INTO visite(dateVisite, idPharmacie, idDmo, idFormulaire) VALUES(:dateVisite, :pharmacie, :dmo, :formulaire)');
+    $req->bindParam(":dateVisite", $dateVisite);
     $req->bindParam(":pharmacie", $pharmacie);
     $req->bindParam(":dmo", $dmo);
+    $req->bindParam(":formulaire", $formulaire);
     $req->execute();
 }
 
@@ -103,11 +112,59 @@ if(isset($_POST['ajouter-pharmacien'])) {
     </nav>
 </header>
 <a href="#" class="btn btn-primary btn-ajout-visite">Ajouter une nouvelle visite</a>
-<a href="#" class="btn btn-primary btn-ajout-questionnaire">Ajouter un nouveau questionnaire</a>
+<a href="#" class="btn btn-primary btn-ajout-questionnaire">Ajouter un nouveau formulaire</a>
+<a href="#" class="btn btn-primary btn-affichage-visite" data-toggle="modal" data-target="#visite">Visites passées</a>
+<?php
+//Je récupère toutes les Pharmacies
+$req = $bdd->prepare('SELECT * FROM Visite LEFT JOIN pharmacie on pharmacie.idPharmacie = visite.idPharmacie LEFT JOIN dmo on dmo.idDmo = visite.idDmo LEFT JOIN formulaire on formulaire.idFormulaire = visite.idFormulaire WHERE dateVisite < cast(now() as date)');
+$req->execute();
+$data = $req->fetchAll();
+?>
+
+<div class="modal fade" id="visite" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Liste des visites passées</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-body">
+                <table>
+                    <tr>
+                        <td>Date</td>
+                        <td>Pharmacie</td>
+                        <td>Dmo</td>
+                        <td>Formulaire</td>
+                    </tr>
+
+                    <?php
+                    foreach($data as $value) { ?>
+                        <tr>
+                            <form class="form-group" method="post" action="Visites.php">
+                                <input type="hidden" name="idVisite" value="<?php echo $value['idVisite']; ?>" />
+                                <td type="date" name="dateVisite"><?php echo $value['dateVisite']; ?></td>
+                                <td type="text" name="pharmacie"><?php echo $value[6]; // nom de la pharmacie?></td>
+                                <td type="text" name="dmo"><?php echo $value['login']?></td>
+                                <td type="text" name="formulaire"><?php echo $value[15]; // nom du formulaire?></td>
+                            </form>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <table>
     <tr class="tr-ajout-visite" style="display: none;">
         <form class="form-ajout-visite" method="post" action="Visites.php">
-            <td><input class="form-control" type="date" name="date" placeholder="Date"/></td>
+            <td><input class="form-control" type="date" name="dateVisite" placeholder="Date"/></td>
             <td>
                 <select class="form-control" type="select" name="pharmacie">
                     <?php
@@ -130,36 +187,28 @@ if(isset($_POST['ajouter-pharmacien'])) {
 
                     foreach($data as $value) {
                         ?>
-                        <option value="<?php echo $value['idDmo'] ?>"><?php echo $value['prenom'].' '.$value['nom'] ?></option>
+                        <option value="<?php echo $value['idDmo'] ?>"><?php echo $value['login'] ?></option>
                     <?php } ?>
                 </select>
+            </td>
+            <td>
+                <?php
+                    $req = $bdd->prepare('SELECT * FROM formulaire');
+                    $req->execute();
+                    $data = $req->fetchAll();
+                if($data == null){ ?>
+                    <a href="#" class="btn btn-primary btn-ajout-questionnaire">Créer le premier formulaire</a>
+                <?php }else{
+                foreach($data as $value) {
+                ?>
+                <select class="form-control" type="select" name="formulaire">
+                    <option value="<?php echo $value['idFormulaire'] ?>"><?php echo $value['nom']?></option>
+                </select>
+                <?php } }?>
             </td>
             <td><input class="btn btn-success" type="submit" name="ajouter-visite" value="Ajouter" /></td>
         </form>
         <td><a href="#" class="btn btn-secondary btn-ajout-visite-annuler">Annuler</a></td>
-    </tr>
-</table>
-<table>
-    <tr class="tr-ajout-questionnaire" style="display: none;">
-        <form class="form-ajout-questionnaire" method="post" action="Visites.php">
-            <td><input class="form-control" type="text" name="prenom" placeholder="Prénom"/></td>
-            <td><input class="form-control" type="text" name="nom" placeholder="Nom"/></td>
-            <td>
-                <select class="form-control" type="select" name="pharmacie">
-                    <?php
-                    $req = $bdd->prepare('SELECT * FROM Pharmacie');
-                    $req->execute();
-                    $data = $req->fetchAll();
-
-                    foreach($data as $value) {
-                        ?>
-                        <option value="<?php echo $value['idPharmacie'] ?>"><?php echo $value['nom'] ?></option>
-                    <?php } ?>
-                </select>
-            </td>
-            <td><input class="btn btn-success" type="submit" name="ajouter-questionnaire" value="Ajouter" /></td>
-        </form>
-        <td><a href="#" class="btn btn-secondary btn-ajout-questionnaire-annuler">Annuler</a></td>
     </tr>
 </table>
 <h3>Liste des pharmacies</h3>
@@ -168,25 +217,23 @@ if(isset($_POST['ajouter-pharmacien'])) {
         <td>Date</td>
         <td>Pharmacie</td>
         <td>Dmo</td>
-        <td>Questionnaire</td>
+        <td>Formulaire</td>
     </tr>
     <?php
 
-    //Je récupère toutes les Pharmacies
-    $req = $bdd->prepare('SELECT * FROM Visite');
+    $req = $bdd->prepare('SELECT * FROM Visite LEFT JOIN pharmacie on pharmacie.idPharmacie = visite.idPharmacie LEFT JOIN dmo on dmo.idDmo = visite.idDmo LEFT JOIN formulaire on formulaire.idFormulaire = visite.idFormulaire WHERE dateVisite >= cast(now() as date)');
     $req->execute();
     $data = $req->fetchAll();
 
-    foreach($data as $value) {
-        //Pour chaque pharmacie je récupère tous les pharmaciens associés
+    foreach($data as $value) {;
         ?>
         <tr>
-            <form class="form-group" method="post" action="">
+            <form class="form-group" method="post" action="Visites.php">
                 <input type="hidden" name="idVisite" value="<?php echo $value['idVisite']; ?>" />
-                <td><input class="form-control" type="text" name="date" value="<?php echo $value['date']; ?>" /></td>
-                <td><input class="form-control" type="text" name="pharmacie" value="<?php echo $value['idPharmacie']; ?>" /></td>
-                <td><input class="form-control" type="text" name="dmo" value="<?php echo $value['idDmo']; ?>" /></td>
-                <td><input class="form-control" type="text" name="questionnaire" value="<?php echo $value['idFormulaire']; ?>" /></td>
+                <td><input class="form-control" type="date" name="dateVisite" value="<?php echo $value['dateVisite']; ?>" /></td>
+                <td><input class="form-control" type="text" name="pharmacie" value="<?php echo $value[6]; // nom de la pharmacie?>" /></td>
+                <td><input class="form-control" type="text" name="dmo" value="<?php echo $value['login']?>" /></td>
+                <td><input class="form-control" type="text" name="formulaire" value="<?php echo $value[15]; // nom du formulaire?>" /></td>
                 <td><button class="btn btn-warning" type="submit" name="modifier">Modifier</button></td>
                 <td><input class="btn btn-danger" type="submit" name="supprimer" value="Supprimer" /></td>
             </form>

@@ -33,7 +33,7 @@ if(isset($_POST['modifierPharmacien'])) {
     $id = $_POST['id'];
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
-    $pharmacie = $_POST['pharmacie'];
+    $pharmacie = $_POST['idPharma'];
 
     $req = $bdd->prepare('UPDATE pharmacien SET nom = :nom, prenom = :prenom, idPharmacie = :pharmacie WHERE idPharmacien = :id ');
 
@@ -223,15 +223,23 @@ if(isset($_POST['ajouter-pharmacien'])) {
                                                         <td><input class="form-control" type="text" name="prenom" value="<?php echo $value2['prenom']; ?>" /></td>
                                                         <td><input class="form-control" type="text" name="nom" value="<?php echo $value2['nom']; ?>" /></td>
                                                         <td>
-                                                            <select class="form-control" type="select" name="pharmacie">
+                                                            <select class="form-control" type="select" name="idPharma">
                                                                 <?php
-                                                                $req3 = $bdd->prepare('SELECT * FROM Pharmacie');
-                                                                $req3->execute();
-                                                                $data3 = $req3->fetchAll();
+                                                                $req = $bdd->prepare('SELECT * FROM Pharmacie WHERE idPharmacie = :idPharmacie');
+                                                                $req->BindParam(':idPharmacie', $value['idPharmacie']);
+                                                                $req->execute();
+                                                                $data = $req->fetchAll();
+                                                                ?>
+                                                                    <option value="<?php echo $value['idPharmacie'] ?>"><?php echo $value['nom'] ?></option>
+                                                                <?php
+                                                                $req = $bdd->prepare('SELECT * FROM Pharmacie WHERE idPharmacie != :idPharmacie');
+                                                                $req->BindParam(':idPharmacie', $value['idPharmacie']);
+                                                                $req->execute();
+                                                                $data2 = $req->fetchAll();
 
-                                                                foreach($data3 as $value3) {
+                                                                foreach($data2 as $value2) {
                                                                     ?>
-                                                                    <option value="<?php echo $value2['idPharmacie'] ?>"><?php echo $value3['nom'] ?></option>
+                                                                    <option value="<?php echo $value2['idPharmacie'] ?>"><?php echo $value2['nom'] ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </td>
