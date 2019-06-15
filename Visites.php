@@ -289,25 +289,29 @@ $data = $req->fetchAll();
                     <td>Réponse</td>
                 </tr>
                 <tr>
-                <form class="form-ajout-visite" method="post" action="Visites.php" id="form">
-                    <td><textarea class="form-control" rows="1"  name="question"></textarea></td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" type="button" id="simple">Simple</button>
-                                <button class="btn btn-outline-secondary" type="button" id="multiple">Multiple</button>
-                                <button class="btn btn-outline-secondary" type="button" id="libre">Libre</button>
+                    <div id="form">
+                    <form class="form-ajout-visite" method="post" action="Visites.php">
+                        <td><textarea class="form-control" rows="1" name="question"></textarea></td>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" id="simple">Simple</label>
                             </div>
-                        </div>
-                    </td>
-                    <td id="idTd">
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" id="multiple">Multiple</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio" id="libre">Libre</label>
+                            </div>
+                        </td>
+                        <td id="idTd">
 
-                    </td>
-                    <td><input class="btn btn-success" type="submit" name="ajouter-formulaire" value="Ajouter"  id="ajouter"/></td>
-                </form>
+                        </td>
+                        <td><input class="btn btn-success" type="submit" name="ajouter-formulaire" value="Ajouter"  id="ajouter"/></td>
+                    </form>
+                    </div>
                 </tr>
             </table>
-                <div id="reponse">
+                <div>
 
                 </div>
             </div>
