@@ -60,6 +60,7 @@ if(isset($_POST['supprimer'])) {
         <a class="nav-item nav-link active" href="Dmo.php">DMO</a>
         <a class="nav-item nav-link" href="Visites.php">Visites</a>
         <a class="nav-item nav-link" href="Pharmacies.php">Pharmacies</a>
+        <a class="nav-item nav-link" href="Achats.php">Achats</a>
         <a class="nav-item nav-link disabled" href="#">
             <img src="images/logo_nivantis.png" />
         </a>

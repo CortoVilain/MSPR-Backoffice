@@ -44,14 +44,23 @@ if(isset($_POST['ajouter-visite'])) {
     $req->bindParam(":formulaire", $formulaire);
     $req->execute();
 }
+if(isset($_POST['ajouter-formulaire'])) {
+    $nom = $_POST['nom'];
+
+    $req = $bdd->prepare('INSERT INTO formulaire(nom) VALUES(:nom)');
+    $req->bindParam(":nom", $nom);
+    $req->execute();
+}
+
 
 ?>
+
 
 <!-- Le HTML -->
 
 <head>
     <meta charset="UTF-8">
-    <title>Administration : DMO</title>
+    <title>Administration : Visites</title>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -65,13 +74,14 @@ if(isset($_POST['ajouter-visite'])) {
         <a class="nav-item nav-link" href="Dmo.php">DMO</a>
         <a class="nav-item nav-link active" href="Visites.php">Visites</a>
         <a class="nav-item nav-link" href="Pharmacies.php">Pharmacies</a>
+        <a class="nav-item nav-link" href="Achats.php">Achats</a>
         <a class="nav-item nav-link disabled" href="#">
             <img src="images/logo_nivantis.png" />
         </a>
     </nav>
 </header>
 <a href="#" class="btn btn-primary btn-ajout-visite">Ajouter une nouvelle visite</a>
-<a href="#" class="btn btn-primary btn-ajout-questionnaire" data-toggle="modal" data-target="#formulaire">Ajouter un nouveau formulaire</a>
+<a href="#" class="btn btn-primary btn-ajout-formulaire">Ajouter un nouveau formulaire</a><!-- data-toggle="modal" data-target="#formulaire"-->
 <a href="#" class="btn btn-primary btn-affichage-visite" data-toggle="modal" data-target="#visite">Visites passées</a>
 <table>
     <tr class="tr-ajout-visite" style="display: none;">
@@ -124,6 +134,28 @@ if(isset($_POST['ajouter-visite'])) {
             <td><input class="btn btn-success" type="submit" name="ajouter-visite" value="Ajouter" /></td>
         </form>
         <td><a href="#" class="btn btn-secondary btn-ajout-visite-annuler">Annuler</a></td>
+    </tr>
+</table>
+<table>
+    <tr class="tr-ajout-formulaire" style="display: none;">
+        <form class="form-ajout-formulaire" method="post" action="Visites.php">
+            <td><input class="form-control" type="text" name="nom" placeholder="Libellé"/></td>
+            <td><input class="btn btn-success" type="submit" name="ajouter-formulaire" value="Ajouter" id="ajouter-formulaire"/></td>
+        </form>
+        <td><a href="#" class="btn btn-secondary btn-ajout-formulaire-annuler">Annuler</a></td>
+    </tr>
+</table>
+<table>
+    <tr>
+<?php
+$req = $bdd->prepare('select * from formulaire Left join question on formulaire.idFormulaire = question.idFormulaire where question.idFormulaire IS NULL');
+$req->execute();
+$data = $req->fetchAll();
+
+foreach($data as $value) {
+    ?>
+    <td><a href="#" class="btn btn-primary btn-affichage-formulaire" data-toggle="modal" data-target="#formulaire<?php echo $value['0']?>">Le nouveau formulaire</a></td>
+<?php } ?>
     </tr>
 </table>
 <h3>Liste des visites</h3>
@@ -270,13 +302,21 @@ $data = $req->fetchAll();
         </div>
     </div>
 </div>
+
+<?php
+$req = $bdd->prepare('select * from formulaire');
+$req->execute();
+$data = $req->fetchAll();
+
+foreach($data as $value) {
+?>
 <!-- modal formulaire -->
 
-<div class="modal fade" id="formulaire" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="formulaire<?php echo $value['0']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau formulaire</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $value['1']?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -306,7 +346,7 @@ $data = $req->fetchAll();
                         <td id="idTd">
 
                         </td>
-                        <td><input class="btn btn-success" type="submit" name="ajouter-formulaire" value="Ajouter"  id="ajouter"/></td>
+                        <td><input class="btn btn-success" type="submit" name="ajouter-question" value="Ajouter"  id="ajouter-question"/></td>
                     </form>
                     </div>
                 </tr>
@@ -321,6 +361,7 @@ $data = $req->fetchAll();
         </div>
     </div>
 </div>
+<?php } ?>
 <script type="text/javascript" src="js/Visite.js"></script>
 </body>
 </html>

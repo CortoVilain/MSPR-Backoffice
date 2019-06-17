@@ -1,4 +1,5 @@
 jQuery('.btn-ajout-visite').click(function() {
+    jQuery('.tr-ajout-formulaire').css('display', 'none');
     jQuery('.tr-ajout-visite').css('display', 'block');
 });
 
@@ -6,43 +7,33 @@ jQuery('.btn-ajout-visite-annuler').click(function() {
     jQuery('.tr-ajout-visite').css('display', 'none');
 });
 
+jQuery('.btn-ajout-formulaire').click(function() {
+    jQuery('.tr-ajout-visite').css('display', 'none');
+    jQuery('.tr-ajout-formulaire').css('display', 'block');
+});
+
+jQuery('.btn-ajout-formulaire-annuler').click(function() {
+    jQuery('.tr-ajout-formulaire').css('display', 'none');
+});
+
+
 
 jQuery('#simple').click(function() {
     if($('#simple').is(':checked')) {
         jQuery('#idTd').empty();
-        jQuery('#idTd').append('<div class="input-group">\n' +
-            '                       <input type="text" class="form-control">\n' +
-            '                       <div class="input-group-append">\n' +
-            '                           <button class="btn btn-outline-secondary" type="button">\n' +
-            '                               <span aria-hidden="true">x</span>\n' +
-            '                           </button>\n' +
-            '                       </div>\n' +
-            '                   </div>' +
-            '<div class="input-group" id="2">\n' +
+        jQuery('#idTd').append('<input type="text" class="form-control">\n' +
             '    <input type="text" class="form-control">\n' +
-            '    <div class="input-group-append">\n' +
-            '        <button class="btn btn-outline-secondary" type="button">\n' +
-            '            <span aria-hidden="true">x</span>\n' +
-            '        </button>\n' +
-            '    </div>\n' +
-            '</div>' +
-            '<button type="button" class="btn btn-outline-dark btn-sm btn-rep">Ajouter</button>');
+            '<button type="button" class="btn btn-outline-dark btn-sm btn-rep">Ajouter</button>' +
+            '<button type="button" class="btn btn-outline-danger btn-sm btn-sup" style="display: none">Supprimer</button>');
     }
     jQuery('.btn-rep').click(function() {
-        var x = $('#2').attr("id");
-        x = x + 1;
-        alert('x');
-        jQuery('.btn-rep').before('<div class="input-group"> \n' +
-            '                                   <input type="text" class="form-control"> \n' +
-            '                                   <div class="input-group-append"> \n' +
-            '                                       <button class="btn btn-outline-secondary" type="button" id=""> \n' +
-            '                                           <span aria-hidden="true">x</span> \n' +
-            '                                       </button> \n' +
-            '                                   </div> \n' +
-            '                               </div>');
+        jQuery('.btn-rep').before('  <input type="text" class="form-control reponse">');
+
+        $('.reponse').attr("id","input");
+        jQuery('.btn-sup').css('display', 'inline-block');
     });
-    jQuery('.$compteur').click(function() {
-        jQuery('.input-group').empty();
+    jQuery('.btn-sup').click(function () {
+        jQuery('#input').remove();
     });
 });
 
@@ -50,33 +41,19 @@ jQuery('#simple').click(function() {
 jQuery('#multiple').click(function() {
     if($('#multiple').is(':checked')) {
         jQuery('#idTd').empty();
-        jQuery('#idTd').append('<div class="input-group">\n' +
-            '                       <input type="text" class="form-control">\n' +
-            '                       <div class="input-group-append">\n' +
-            '                           <button class="btn btn-outline-secondary" type="button">\n' +
-            '                               <span aria-hidden="true">x</span>\n' +
-            '                           </button>\n' +
-            '                       </div>\n' +
-            '                   </div>' +
-            '<div class="input-group">\n' +
+        jQuery('#idTd').append('<input type="text" class="form-control">\n' +
             '    <input type="text" class="form-control">\n' +
-            '    <div class="input-group-append">\n' +
-            '        <button class="btn btn-outline-secondary" type="button">\n' +
-            '            <span aria-hidden="true">x</span>\n' +
-            '        </button>\n' +
-            '    </div>\n' +
-            '</div>' +
-            '<button type="button" class="btn btn-outline-dark btn-sm btn-rep">Ajouter</button>');
+            '<button type="button" class="btn btn-outline-dark btn-sm btn-rep">Ajouter</button>' +
+            '<button type="button" class="btn btn-outline-danger btn-sm btn-sup" style="display: none">Supprimer</button>');
     }
     jQuery('.btn-rep').click(function() {
-        jQuery('.btn-rep').before('<div class="input-group"> \n' +
-            '                                   <input type="text" class="form-control"> \n' +
-            '                                   <div class="input-group-append"> \n' +
-            '                                       <button class="btn btn-outline-secondary" type="button"> \n' +
-            '                                           <span aria-hidden="true">x</span> \n' +
-            '                                       </button> \n' +
-            '                                   </div> \n' +
-            '                               </div>');
+        jQuery('.btn-rep').before('  <input type="text" class="form-control reponse">');
+
+        $('.reponse').attr("id","input");
+        jQuery('.btn-sup').css('display', 'inline-block');
+    });
+    jQuery('.btn-sup').click(function () {
+        jQuery('#input').remove();
     });
 });
 
@@ -88,22 +65,7 @@ jQuery('#libre').click(function() {
 });
 
 
-
-
-$(document).ready(function(){
-    $("#ajouter").click(function(event){
-        event.preventDefault();
-    });
+$("#ajouter-question").click(function(event){
+    event.preventDefault();
 });
 
-
-/* exemple
-jQuery('#simple').click(function() {
-    jQuery('#idTd').append('\n' +
-        '                        <div class="form-check radio" id="radio">\n' +
-        '                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>\n' +
-        '                            <input type="text" class="form-control form-control-sm">\n' +
-        '                        </div>');
-    jQuery('#multiple').prop('disabled',true);
-    jQuery('#libre').prop('disabled',true);
-});*/
