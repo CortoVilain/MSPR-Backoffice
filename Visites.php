@@ -81,7 +81,7 @@ if(isset($_POST['ajouter-formulaire'])) {
     </nav>
 </header>
 <a href="#" class="btn btn-primary btn-ajout-visite">Ajouter une nouvelle visite</a>
-<a href="#" class="btn btn-primary btn-ajout-formulaire">Ajouter un nouveau formulaire</a><!-- data-toggle="modal" data-target="#formulaire"-->
+<a href="#" class="btn btn-primary btn-ajout-formulaire">Ajouter un nouveau formulaire</a>
 <a href="#" class="btn btn-primary btn-affichage-visite" data-toggle="modal" data-target="#visite">Visites passées</a>
 <table>
     <tr class="tr-ajout-visite" style="display: none;">
@@ -283,13 +283,11 @@ $data = $req->fetchAll();
                     <?php
                     foreach($data as $value) { ?>
                         <tr>
-                            <form class="form-group" method="post" action="Visites.php">
-                                <input type="hidden" name="idVisite" value="<?php echo $value['idVisite']; ?>" />
-                                <td type="date" name="dateVisite"><?php echo $value['dateVisite']; ?></td>
-                                <td type="text" name="pharmacie"><?php echo $value[6]; // nom de la pharmacie?></td>
-                                <td type="text" name="dmo"><?php echo $value['login']?></td>
-                                <td type="text" name="formulaire"><?php echo $value[15]; // nom du formulaire?></td>
-                            </form>
+                            <td type="date" name="dateVisite"><?php echo $value['dateVisite']; ?></td>
+                            <td type="text" name="pharmacie"><?php echo $value[6]; // nom de la pharmacie?></td>
+                            <td type="text" name="dmo"><?php echo $value['login']?></td>
+                            <td type="text" name="formulaire"><?php echo $value[15]; // nom du formulaire?></td>
+
                         </tr>
                         <?php
                     }
