@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <?php
 include ('lib/bdd_connexion.php');
@@ -79,11 +79,11 @@ $req->execute();
 <head>
     <meta charset="UTF-8">
     <title>Administration : Achats</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/Formations.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/Formations.css" /> -->
     <link rel="stylesheet" href="css/Topbar.css" />
 </head>
 <body>
@@ -107,41 +107,43 @@ $req->execute();
 <a href="#" class="btn btn-primary btn-affichage-formation" data-toggle="modal" data-target="#formation">Anciennes formations</a>
 <a href="#" class="btn btn-primary btn-association-formation">Associer formation </a>
 
-<div class="modal fade" id="formation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+
+    <!--modal-->
+<div class="modal fade" id="formation" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Liste des formations passées</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Liste des visites passées</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div id="modal-body">
-                <table>
+            <table>
+                <tr>
+                    <td>Libellé</td>
+                    <td>Date</td>
+                    <td>Description</td>
+                </tr>
+
+                <?php
+                $req = $bdd->prepare('SELECT * FROM formation  WHERE date < cast(now() as date)');
+                $req->execute();
+                $data = $req->fetchAll();
+
+                foreach($data as $value) { ?>
                     <tr>
-                        <td>Libellé</td>
-                        <td>Date</td>
-                        <td>Description</td>
+                        <td type="text" name="libelle"><?php echo $value['libelle']; ?></td>
+                        <td type="date" name="date"><?php echo $value['date']; ?></td>
+                        <td type="text" name="description"><?php echo $value['description']; ?></td>
                     </tr>
-
                     <?php
-                    $req = $bdd->prepare('SELECT * FROM formation  WHERE date < cast(now() as date)');
-                    $req->execute();
-                    $data = $req->fetchAll();
-
-                    foreach($data as $value) { ?>
-                        <tr>
-                            <td type="text" name="libelle"><?php echo $value['libelle']; ?></td>
-                            <td type="date" name="date"><?php echo $value['date']; ?></td>
-                            <td type="text" name="description"><?php echo $value['description']; ?></td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                }
+                ?>
+            </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -192,117 +194,114 @@ $req->execute();
         <td><a href="#" class="btn btn-secondary association-annuler">Annuler</a></td>
     </tr>
 </table>
-<div class="row">
-    <div class="col-md-6">
-        <h3>Liste des formations</h3>
-        <table>
-            <tr>
-                <td>Libellé</td>
-                <td>Date</td>
-                <td>Description</td>
-            </tr>
+<h3>Liste des formations</h3>
+<table>
+    <tr>
+        <td>Libellé</td>
+        <td>Date</td>
+        <td>Description</td>
+    </tr>
 
-            <?php
+    <?php
 
-            $req = $bdd->prepare('SELECT * FROM formation WHERE date > cast(now() as date) ');
-            $req->execute();
-            $data = $req->fetchAll();
+    $req = $bdd->prepare('SELECT * FROM formation WHERE date > cast(now() as date) ');
+    $req->execute();
+    $data = $req->fetchAll();
 
-            foreach($data as $value) { ?>
-                <tr>
-                    <form class="form-group" method="post" action="Formations.php">
-                        <input type="hidden" name="id" value="<?php echo $value['id_formation']; ?>" />
-                        <td><input class="form-control" type="text" name="libelle" value="<?php echo $value['libelle']; ?>" /></td>
-                        <td><input class="form-control" type="date" name="date" value="<?php echo $value['date']; ?>" /></td>
-                        <td><input class="form-control" type="text" name="description" value="<?php echo $value['description']; ?>" /></td>
-                        <td><input class="btn btn-warning" type="submit" name="modifierFormation" value="Modifier" /></td>
+    foreach($data as $value) { ?>
+        <tr>
+            <form class="form-group" method="post" action="Formations.php">
+                <input type="hidden" name="id" value="<?php echo $value['id_formation']; ?>" />
+                <td><input class="form-control" type="text" name="libelle" value="<?php echo $value['libelle']; ?>" /></td>
+                <td><input class="form-control" type="date" name="date" value="<?php echo $value['date']; ?>" /></td>
+                <td><input class="form-control" type="text" name="description" value="<?php echo $value['description']; ?>" /></td>
+                <td><input class="btn btn-warning" type="submit" name="modifierFormation" value="Modifier" /></td>
 
-                        <td><input class="btn btn-danger" type="submit" name="supprimerFormation" value="Supprimer" /></td>
+                <td><input class="btn btn-danger" type="submit" name="supprimerFormation" value="Supprimer" /></td>
 
 
 
-                    </form>
-                </tr>
-                <?php
-            }
-            ?>
-        </table>
-    </div>
-    <!-- liste des formations des pharmaciens -->
-    <div class="col-md-6">
-        <h3>Formations des pharmaciens</h3>
-        <table>
-            <tr>
-                <td>Pharmacien</td>
-                <td>Formation</td>
-            </tr>
+            </form>
+        </tr>
+        <?php
+    }
+    ?>
+</table>
 
-            <?php
+<!-- liste des formations des pharmaciens -->
 
-            $req = $bdd->prepare('SELECT * FROM formation_pharmacien INNER JOIN pharmacien on formation_pharmacien.id_pharmacien = pharmacien.id_pharmacien INNER JOIN formation on formation_pharmacien.id_formation = formation.id_formation ');
-            $req->execute();
-            $data = $req->fetchAll();
+<h3>Formations des pharmaciens</h3>
+<table>
+    <tr>
+        <td>Pharmacien</td>
+        <td>Formation</td>
+    </tr>
 
-            foreach($data as $value) { ?>
-                <tr>
-                    <form class="form-group" method="post" action="Formations.php">
-                        <input type="hidden" name="idPharm" value="<?php echo $value['id_pharmacien']; ?>"/>
-                        <input type="hidden" name="idForm" value="<?php echo $value['id_formation']; ?>"/>
-                        <td>
-                            <select class="form-control" type="select" name="pharmacien">
-                                <?php
-                                $req2 = $bdd->prepare('SELECT * FROM pharmacien WHERE id_pharmacien = :id_pharmacien');
-                                $req2->BindParam(':id_pharmacien', $value['id_pharmacien']);
-                                $req2->execute();
-                                $data2 = $req2->fetchAll();
+    <?php
 
-                                foreach($data2 as $value2) {
-                                    ?>
-                                    <option value="<?php echo $value2['id_pharmacien'] ?>"><?php echo $value2['prenom'].' '.$value2['nom'] ?></option>
-                                <?php }
-                                $req3 = $bdd->prepare('SELECT * FROM pharmacien WHERE id_pharmacien != :id_pharmacien');
-                                $req3->BindParam(':id_pharmacien', $value['id_pharmacien']);
-                                $req3->execute();
-                                $data3 = $req3->fetchAll();
+    $req = $bdd->prepare('SELECT * FROM formation_pharmacien INNER JOIN pharmacien on formation_pharmacien.id_pharmacien = pharmacien.id_pharmacien INNER JOIN formation on formation_pharmacien.id_formation = formation.id_formation ');
+    $req->execute();
+    $data = $req->fetchAll();
 
-                                foreach($data3 as $value3) {
-                                    ?>
-                                    <option value="<?php echo $value3['id_pharmacien'] ?>"><?php echo $value3['prenom'].' '.$value3['nom'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-control" type="select" name="formation">
-                                <?php
-                                $req2 = $bdd->prepare('SELECT * FROM formation WHERE id_formation = :id_formation');
-                                $req2->BindParam(':id_formation', $value['id_formation']);
-                                $req2->execute();
-                                $data2 = $req2->fetchAll();
+    foreach($data as $value) { ?>
+        <tr>
+            <form class="form-group" method="post" action="Formations.php">
+                <input type="hidden" name="idPharm" value="<?php echo $value['id_pharmacien']; ?>"/>
+                <input type="hidden" name="idForm" value="<?php echo $value['id_formation']; ?>"/>
+                <td>
+                    <select class="form-control" type="select" name="pharmacien">
+                        <?php
+                        $req2 = $bdd->prepare('SELECT * FROM pharmacien WHERE id_pharmacien = :id_pharmacien');
+                        $req2->BindParam(':id_pharmacien', $value['id_pharmacien']);
+                        $req2->execute();
+                        $data2 = $req2->fetchAll();
 
-                                foreach($data2 as $value2) {
-                                    ?>
-                                    <option value="<?php echo $value2['id_formation'] ?>"><?php echo $value2['libelle'] ?></option>
-                                <?php }
-                                $req3 = $bdd->prepare('SELECT * FROM formation WHERE id_formation != :id_formation');
-                                $req3->BindParam(':id_formation', $value['id_formation']);
-                                $req3->execute();
-                                $data3 = $req3->fetchAll();
+                        foreach($data2 as $value2) {
+                            ?>
+                            <option value="<?php echo $value2['id_pharmacien'] ?>"><?php echo $value2['prenom'].' '.$value2['nom'] ?></option>
+                        <?php }
+                        $req3 = $bdd->prepare('SELECT * FROM pharmacien WHERE id_pharmacien != :id_pharmacien');
+                        $req3->BindParam(':id_pharmacien', $value['id_pharmacien']);
+                        $req3->execute();
+                        $data3 = $req3->fetchAll();
 
-                                foreach($data3 as $value3) {
-                                    ?>
-                                    <option value="<?php echo $value3['id_formation'] ?>"><?php echo $value3['libelle'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </td>
-                        <td><input class="btn btn-warning" type="submit" name="modifierAssociation" value="Modifier" /></td>
-                        <td><input class="btn btn-danger" type="submit" name="supprimerAssociation" value="Supprimer" /></td>
-                    </form>
-                </tr>
-                <?php
-            }
-            ?>
-        </table>
-    </div>
+                        foreach($data3 as $value3) {
+                            ?>
+                            <option value="<?php echo $value3['id_pharmacien'] ?>"><?php echo $value3['prenom'].' '.$value3['nom'] ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" type="select" name="formation">
+                        <?php
+                        $req2 = $bdd->prepare('SELECT * FROM formation WHERE id_formation = :id_formation');
+                        $req2->BindParam(':id_formation', $value['id_formation']);
+                        $req2->execute();
+                        $data2 = $req2->fetchAll();
+
+                        foreach($data2 as $value2) {
+                            ?>
+                            <option value="<?php echo $value2['id_formation'] ?>"><?php echo $value2['libelle'] ?></option>
+                        <?php }
+                        $req3 = $bdd->prepare('SELECT * FROM formation WHERE id_formation != :id_formation');
+                        $req3->BindParam(':id_formation', $value['id_formation']);
+                        $req3->execute();
+                        $data3 = $req3->fetchAll();
+
+                        foreach($data3 as $value3) {
+                            ?>
+                            <option value="<?php echo $value3['id_formation'] ?>"><?php echo $value3['libelle'] ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+                <td><input class="btn btn-warning" type="submit" name="modifierAssociation" value="Modifier" /></td>
+                <td><input class="btn btn-danger" type="submit" name="supprimerAssociation" value="Supprimer" /></td>
+            </form>
+        </tr>
+        <?php
+    }
+    ?>
+</table>
 </div>
 <script type="text/javascript" src="js/Achat.js"></script>
 </div>

@@ -190,7 +190,7 @@ if(isset($_POST['supprimerProduit'])) {
     </tr>
 </table>
 <h3>Liste des Achats</h3>
-<div style="height: 500px;overflow: auto; width: 70%;">
+<div style="height: 500px;overflow: auto;">
 <table>
     <tr>
         <td>Quantité</td>
@@ -310,7 +310,7 @@ if(isset($_POST['supprimerProduit'])) {
     </tr>
 </table>
 <h3>Liste des Ventes</h3>
-<div style="height: 500px;overflow: auto;width: 70%;">
+<div style="height: 500px;overflow: auto;">
 <table>
     <tr>
         <td>Quantité</td>
