@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
-$bdd->exec('SET NAMES utf8');
+include ('lib/bdd_connexion.php');
 
 
 if (isset($_POST['modifier'])) {
-    $id = $_POST['idPharmacie'];
+    $id = $_POST['id_pharmacie'];
     $nom = $_POST['nom'];
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
 
-    $req = $bdd->prepare('UPDATE pharmacie SET nom = :nom, latitude = :latitude, longitude = :longitude WHERE idPharmacie = :id ');
+    $req = $bdd->prepare('UPDATE pharmacie SET nom = :nom, latitude = :latitude, longitude = :longitude WHERE id_pharmacie = :id ');
 
     $req->bindParam(":nom", $nom);
     $req->bindParam(":latitude", $latitude);
@@ -21,9 +20,9 @@ if (isset($_POST['modifier'])) {
 }
 
 if(isset($_POST['supprimer'])) {
-    $id = $_POST['idPharmacie'];
+    $id = $_POST['id_pharmacie'];
 
-    $req = $bdd->prepare('DELETE FROM pharmacie WHERE idPharmacie = :id ');
+    $req = $bdd->prepare('DELETE FROM pharmacie WHERE id_pharmacie = :id ');
 
     $req->bindParam(":id", $id);
     $req->execute();
@@ -35,7 +34,7 @@ if(isset($_POST['modifierPharmacien'])) {
     $prenom = $_POST['prenom'];
     $pharmacie = $_POST['idPharma'];
 
-    $req = $bdd->prepare('UPDATE pharmacien SET nom = :nom, prenom = :prenom, idPharmacie = :pharmacie WHERE idPharmacien = :id ');
+    $req = $bdd->prepare('UPDATE pharmacien SET nom = :nom, prenom = :prenom, id_pharmacie = :pharmacie WHERE id_pharmacien = :id ');
 
     $req->bindParam(":nom", $nom);
     $req->bindParam(":prenom", $prenom);
@@ -47,7 +46,7 @@ if(isset($_POST['modifierPharmacien'])) {
 if(isset($_POST['supprimerPharmacien'])) {
     $id = $_POST['id'];
 
-    $req = $bdd->prepare('DELETE FROM pharmacien WHERE idPharmacien = :id ');
+    $req = $bdd->prepare('DELETE FROM pharmacien WHERE id_pharmacien = :id ');
 
     $req->bindParam(":id", $id);
     $req->execute();
@@ -70,7 +69,7 @@ if(isset($_POST['ajouter-pharmacien'])) {
     $nom = $_POST['nom'];
     $pharmacie = $_POST['pharmacie'];
 
-    $req = $bdd->prepare('INSERT INTO pharmacien(prenom, nom, idPharmacie) VALUES(:prenom, :nom, :pharmacie)');
+    $req = $bdd->prepare('INSERT INTO pharmacien(prenom, nom, id_pharmacie) VALUES(:prenom, :nom, :pharmacie)');
     $req->bindParam(":prenom", $prenom);
     $req->bindParam(":nom", $nom);
     $req->bindParam(":pharmacie", $pharmacie);
@@ -98,11 +97,14 @@ if(isset($_POST['ajouter-pharmacien'])) {
         <a class="nav-item nav-link" href="Visites.php">Visites</a>
         <a class="nav-item nav-link active" href="Pharmacies.php">Pharmacies</a>
         <a class="nav-item nav-link" href="Achats.php">Achats</a>
+        <a class="nav-item nav-link" href="Formations.php">Formations</a>
         <a class="nav-item nav-link disabled" href="#">
             <img src="images/logo_nivantis.png" />
         </a>
     </nav>
 </header>
+<body>
+<div class="container">
 <a href="#" class="btn btn-primary btn-ajout-pharmacie">Ajouter une nouvelle pharmacie</a>
 <a href="#" class="btn btn-primary btn-ajout-pharmacien">Ajouter un nouveau pharmacien</a>
 <table>
@@ -130,7 +132,7 @@ if(isset($_POST['ajouter-pharmacien'])) {
 
                     foreach($data as $value) {
                     ?>
-                        <option value="<?php echo $value['idPharmacie'] ?>"><?php echo $value['nom'] ?></option>
+                        <option value="<?php echo $value['id_pharmacie'] ?>"><?php echo $value['nom'] ?></option>
                     <?php } ?>
                 </select>
             </td>
@@ -156,20 +158,20 @@ if(isset($_POST['ajouter-pharmacien'])) {
 
     foreach($data as $value) {
         //Pour chaque pharmacie je récupère tous les pharmaciens associés 
-        $req2 = $bdd->prepare('SELECT * FROM Pharmacien WHERE idPharmacie = :idPharmacie');
-        $req2->BindParam(':idPharmacie', $value['idPharmacie']);
+        $req2 = $bdd->prepare('SELECT * FROM Pharmacien WHERE id_pharmacie = :id_pharmacie');
+        $req2->BindParam(':id_pharmacie', $value['id_pharmacie']);
         $req2->execute();
         $data2 = $req2->fetchAll();
         ?>
         <tr>
             <form class="form-group" method="post" action="">
-                <input type="hidden" name="idPharmacie" value="<?php echo $value['idPharmacie']; ?>" />
+                <input type="hidden" name="id_pharmacie" value="<?php echo $value['id_pharmacie']; ?>" />
                 <td><input class="form-control" type="text" name="nom" value="<?php echo $value['nom']; ?>" /></td>
                 <td><input class="form-control" type="text" name="latitude" value="<?php echo $value['latitude']; ?>" /></td>
                 <td><input class="form-control" type="text" name="longitude" value="<?php echo $value['longitude']; ?>" /></td>
                 <?php
                 if(!($data2 == null)) { ?>
-                 <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal<?php echo $value['idPharmacie'] ?>">Liste pharmaciens</button></td>
+                 <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal<?php echo $value['id_pharmacie'] ?>">Liste pharmaciens</button></td>
                 <?php }
                 else { ?>
                     <td>Aucun Pharmacien</td>
@@ -193,13 +195,13 @@ if(isset($_POST['ajouter-pharmacien'])) {
 
     foreach($datasa as $value) {
         //Pour chaque pharmacie je récupère tous les pharmaciens associés 
-        $reqkoi = $bdd->prepare('SELECT * FROM Pharmacien WHERE idPharmacie = :idPharmacie');
-        $reqkoi->BindParam(':idPharmacie', $value['idPharmacie']);
+        $reqkoi = $bdd->prepare('SELECT * FROM Pharmacien WHERE id_pharmacie = :id_pharmacie');
+        $reqkoi->BindParam(':id_pharmacie', $value['id_pharmacie']);
         $reqkoi->execute();
         $dataseb = $reqkoi->fetchAll();
 ?>
 
-<div class="modal fade" id="modal<?php echo $value['idPharmacie'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modal<?php echo $value['id_pharmacie'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -220,27 +222,27 @@ if(isset($_POST['ajouter-pharmacien'])) {
                                         foreach($dataseb as $value2) { ?>
                                             <tr>
                                                 <form class="form-group" method="post" action="">
-                                                    <input type="hidden" name="id" value="<?php echo $value2['idPharmacien']; ?>" />
+                                                    <input type="hidden" name="id" value="<?php echo $value2['id_pharmacien']; ?>" />
                                                         <td><input class="form-control" type="text" name="prenom" value="<?php echo $value2['prenom']; ?>" /></td>
                                                         <td><input class="form-control" type="text" name="nom" value="<?php echo $value2['nom']; ?>" /></td>
                                                         <td>
                                                             <select class="form-control" type="select" name="idPharma">
                                                                 <?php
-                                                                $req = $bdd->prepare('SELECT * FROM Pharmacie WHERE idPharmacie = :idPharmacie');
-                                                                $req->BindParam(':idPharmacie', $value['idPharmacie']);
+                                                                $req = $bdd->prepare('SELECT * FROM Pharmacie WHERE id_pharmacie = :id_pharmacie');
+                                                                $req->BindParam(':id_pharmacie', $value['id_pharmacie']);
                                                                 $req->execute();
                                                                 $data = $req->fetchAll();
                                                                 ?>
-                                                                    <option value="<?php echo $value['idPharmacie'] ?>"><?php echo $value['nom'] ?></option>
+                                                                    <option value="<?php echo $value['id_pharmacie'] ?>"><?php echo $value['nom'] ?></option>
                                                                 <?php
-                                                                $req = $bdd->prepare('SELECT * FROM Pharmacie WHERE idPharmacie != :idPharmacie');
-                                                                $req->BindParam(':idPharmacie', $value['idPharmacie']);
+                                                                $req = $bdd->prepare('SELECT * FROM Pharmacie WHERE id_pharmacie != :id_pharmacie');
+                                                                $req->BindParam(':id_pharmacie', $value['id_pharmacie']);
                                                                 $req->execute();
                                                                 $data2 = $req->fetchAll();
 
                                                                 foreach($data2 as $value2) {
                                                                     ?>
-                                                                    <option value="<?php echo $value2['idPharmacie'] ?>"><?php echo $value2['nom'] ?></option>
+                                                                    <option value="<?php echo $value2['id_pharmacie'] ?>"><?php echo $value2['nom'] ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </td>
@@ -261,5 +263,6 @@ if(isset($_POST['ajouter-pharmacien'])) {
                     </div>
                                     <?php } ?>
 <script type="text/javascript" src="js/Pharmacie.js"></script>
+</div>
 </body>
 </html>

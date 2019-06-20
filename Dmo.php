@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
-$bdd->exec('SET NAMES utf8');
+include ('lib/bdd_connexion.php');
 
 if(isset($_POST['ajouter'])) {
     $login = $_POST['login'];
@@ -10,11 +9,11 @@ if(isset($_POST['ajouter'])) {
     $nom = $_POST['nom'];
     $password = $_POST['password'];
 
-    $req = $bdd->prepare('INSERT INTO dmo(login, prenom, nom, mdp) VALUES(:login, :prenom, :nom, :mdp)');
+    $req = $bdd->prepare('INSERT INTO dmo(login, prenom, nom, password) VALUES(:login, :prenom, :nom, :password)');
     $req->bindParam(":login", $login);
     $req->bindParam(":prenom", $prenom);
     $req->bindParam(":nom", $nom);
-    $req->bindParam(":mdp", $password);
+    $req->bindParam(":password", $password);
     $req->execute();
 }
 
@@ -25,12 +24,12 @@ if(isset($_POST['modifier'])) {
     $nom = $_POST['nom'];
     $password = $_POST['password'];
 
-    $req = $bdd->prepare('UPDATE dmo SET login = :login, prenom = :prenom, nom = :nom, mdp = :mdp WHERE idDmo = :id ');
+    $req = $bdd->prepare('UPDATE dmo SET login = :login, prenom = :prenom, nom = :nom, password = :password WHERE id_dmo = :id ');
 
     $req->bindParam(":login", $login);
     $req->bindParam(":prenom", $prenom);
     $req->bindParam(":nom", $nom);
-    $req->bindParam(":mdp", $password);
+    $req->bindParam(":password", $password);
     $req->bindParam(":id", $id);
     $req->execute();
 }
@@ -38,7 +37,7 @@ if(isset($_POST['modifier'])) {
 if(isset($_POST['supprimer'])) {
     $id = $_POST['id'];
 
-    $req = $bdd->prepare('DELETE FROM dmo WHERE idDmo = :id ');
+    $req = $bdd->prepare('DELETE FROM dmo WHERE id_dmo = :id ');
 
     $req->bindParam(":id", $id);
     $req->execute();
@@ -61,11 +60,13 @@ if(isset($_POST['supprimer'])) {
         <a class="nav-item nav-link" href="Visites.php">Visites</a>
         <a class="nav-item nav-link" href="Pharmacies.php">Pharmacies</a>
         <a class="nav-item nav-link" href="Achats.php">Achats</a>
+        <a class="nav-item nav-link" href="Formations.php">Formations</a>
         <a class="nav-item nav-link disabled" href="#">
             <img src="images/logo_nivantis.png" />
         </a>
     </nav>
 </header>
+<div class="container">
 <a href="#" class="btn btn-primary btn-ajout">Ajouter un nouveau DMO</a>
 <table>
     <tr class="tr-ajout">
@@ -97,11 +98,11 @@ if(isset($_POST['supprimer'])) {
     foreach($data as $value) { ?>
         <tr>
             <form class="form-group" method="post" action="Dmo.php">
-                <input type="hidden" name="id" value="<?php echo $value['idDmo']; ?>" />
+                <input type="hidden" name="id" value="<?php echo $value['id_dmo']; ?>" />
                 <td><input class="form-control" type="text" name="prenom" value="<?php echo $value['prenom']; ?>" /></td>
                 <td><input class="form-control" type="text" name="nom" value="<?php echo $value['nom']; ?>" /></td>
                 <td><input class="form-control" type="text" name="login" value="<?php echo $value['login']; ?>" /></td>
-                <td><input class="form-control" type="text" name="password" value="<?php echo $value['mdp']; ?>" /></td>
+                <td><input class="form-control" type="text" name="password" value="<?php echo $value['password']; ?>" /></td>
                 <td><input class="btn btn-warning" type="submit" name="modifier" value="Modifier" /></td>
                 <td><input class="btn btn-danger" type="submit" name="supprimer" value="Supprimer" /></td>
             </form>
@@ -111,5 +112,6 @@ if(isset($_POST['supprimer'])) {
     ?>
 </table>
 <script type="text/javascript" src="js/Dmo.js"></script>
+</div>
 </body>
 </html>

@@ -13,7 +13,7 @@
     <div class="logo">
         <img src="images/logo_nivantis.png" />
     </div>
-    <div class="formulaire">
+    <div class="questionnaire">
         <form method="POST" class="form-group">
             <h3>Connexion</h3>
 
@@ -28,8 +28,7 @@
     </div>
 </body>
 <?php
-$bdd = new PDO('mysql:host=localhost;dbname=bdd_nivantis', 'root', '');
-$bdd->exec('SET NAMES utf8');
+include ('lib/bdd_connexion.php');
 
 if(isset($_POST['submit']) && isset($_POST['login'])) {
     $login = $_POST['login'];

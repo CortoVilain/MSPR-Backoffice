@@ -31,3 +31,12 @@ jQuery('.btn-association-formation').click(function() {
 jQuery('.association-annuler').click(function() {
     jQuery('.tr-ajout-association').css('display', 'none');
 });
+
+jQuery('.btn-ajout-produit').click(function() {
+    jQuery('.tr-ajout-produit').css('display', 'none');
+    jQuery('.tr-ajout-produit').css('display', 'block');
+});
+
+jQuery('.btn-ajout-produit-annuler').click(function() {
+    jQuery('.tr-ajout-produit').css('display', 'none');
+});

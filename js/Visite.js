@@ -1,5 +1,5 @@
 jQuery('.btn-ajout-visite').click(function() {
-    jQuery('.tr-ajout-formulaire').css('display', 'none');
+    jQuery('.tr-ajout-questionnaire').css('display', 'none');
     jQuery('.tr-ajout-visite').css('display', 'block');
 });
 
@@ -7,13 +7,13 @@ jQuery('.btn-ajout-visite-annuler').click(function() {
     jQuery('.tr-ajout-visite').css('display', 'none');
 });
 
-jQuery('.btn-ajout-formulaire').click(function() {
+jQuery('.btn-ajout-questionnaire').click(function() {
     jQuery('.tr-ajout-visite').css('display', 'none');
-    jQuery('.tr-ajout-formulaire').css('display', 'block');
+    jQuery('.tr-ajout-questionnaire').css('display', 'block');
 });
 
-jQuery('.btn-ajout-formulaire-annuler').click(function() {
-    jQuery('.tr-ajout-formulaire').css('display', 'none');
+jQuery('.btn-ajout-questionnaire-annuler').click(function() {
+    jQuery('.tr-ajout-questionnaire').css('display', 'none');
 });
 
 
