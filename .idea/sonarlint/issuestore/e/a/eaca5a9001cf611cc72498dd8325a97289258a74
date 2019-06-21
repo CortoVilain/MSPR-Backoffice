@@ -1,0 +1,286 @@
+
+aphp:S107À"GThis function has 8 parameters, which is greater than the 7 authorized.(Ñ«êêüÿÿÿÿ
+u	php:S1448"`Class "FPDF" has 86 methods, which is greater than 20 authorized. Split it into smaller classes.(ñ¤ê
+J	php:S1066›"/Merge this if statement with the enclosing one.(ÜÄ¡øÿÿÿÿ
+J	php:S1066½"/Merge this if statement with the enclosing one.(êëœÁùÿÿÿÿ
+[php:S112"FDefine and throw a dedicated exception instead of using a generic one.(é•ÊÛ
+n	php:S3776J"TRefactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.(”Øøùÿÿÿÿ
+j	php:S3776Ø"TRefactor this function to reduce its Cognitive Complexity from 22 to the 15 allowed.(†Š Ô
+o	php:S3776À"TRefactor this function to reduce its Cognitive Complexity from 44 to the 15 allowed.(Ñ«êêüÿÿÿÿ
+o	php:S3776"TRefactor this function to reduce its Cognitive Complexity from 60 to the 15 allowed.(ùã­§úÿÿÿÿ
+o	php:S3776ƒ"TRefactor this function to reduce its Cognitive Complexity from 28 to the 15 allowed.(±¥Øœøÿÿÿÿ
+j	php:S3776à"TRefactor this function to reduce its Cognitive Complexity from 24 to the 15 allowed.(Û½Ë
+o	php:S3776ó	"TRefactor this function to reduce its Cognitive Complexity from 45 to the 15 allowed.(Â·¼õûÿÿÿÿ
+i	php:S3776Ù"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(ß³ç
+o	php:S3776¡"TRefactor this function to reduce its Cognitive Complexity from 62 to the 15 allowed.(ÅïéŞûÿÿÿÿ
+\	php:S1192¿"GDefine a constant instead of duplicating this literal "%.2F w" 3 times.(†ÉW
+^	php:S1192¥"HDefine a constant instead of duplicating this literal "default" 4 times.(¼¤ïª
+d	php:S1192¬"NDefine a constant instead of duplicating this literal "/OpenAction [" 4 times.(ó¼ı
+e	php:S1192Ş	"JDefine a constant instead of duplicating this literal "DeviceRGB" 3 times.(Äîãßıÿÿÿÿ
+a	php:S1192â	"KDefine a constant instead of duplicating this literal "DeviceGray" 3 times.(ÎÜµÃ
+c	php:S1192Ö"HDefine a constant instead of duplicating this literal "endobj" 13 times.(÷¾×şÿÿÿÿ
+d	php:S1192İ	"IDefine a constant instead of duplicating this literal "channels" 3 times.(éë“¶ûÿÿÿÿ
+^	php:S1192é"IDefine a constant instead of duplicating this literal "rotation" 3 times.(£“ª"
+a	php:S1192è
+"FDefine a constant instead of duplicating this literal "smask" 5 times.(Œ†şÿÿÿÿ
+k	php:S1192±"UDefine a constant instead of duplicating this literal "No font has been set" 4 times.(ÓÕ«
+c	php:S1192Ñ"HDefine a constant instead of duplicating this literal "length1" 5 times.(²Ï¡Œûÿÿÿÿ
+v	php:S1192æ"[Define a constant instead of duplicating this literal "%.2F %.2F m %.2F %.2F l S " 4 times.(ñá”´ûÿÿÿÿ
+^	php:S1192Ó"HDefine a constant instead of duplicating this literal "length2" 5 times.(ıäå¤
+c	php:S1192ˆ
+"HDefine a constant instead of duplicating this literal "Indexed" 4 times.(âÉ“şÿÿÿÿ
+Cphp:S121l"0Add curly braces around the nested statement(s).(ï¸Ù	
+Iphp:S121o"0Add curly braces around the nested statement(s).(›ÜÇ…ùÿÿÿÿ
+Iphp:S121q"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Iphp:S121x"0Add curly braces around the nested statement(s).( «È±ûÿÿÿÿ
+Dphp:S121z"0Add curly braces around the nested statement(s).(ÒÈëà
+Cphp:S121|"0Add curly braces around the nested statement(s).(Ğä«s
+Iphp:S121~"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Iphp:S121v"0Add curly braces around the nested statement(s).(ï‡·¸şÿÿÿÿ
+Jphp:S121”"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121±"0Add curly braces around the nested statement(s).(Í³Â
+Ephp:S121º"0Add curly braces around the nested statement(s).(”Ü«Ì
+Jphp:S121×"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Õ"0Add curly braces around the nested statement(s).(»Ìş
+Jphp:S121Û"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Ù"0Add curly braces around the nested statement(s).(®ğ„
+Jphp:S121ä"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121â"0Add curly braces around the nested statement(s).(áÔµ
+Ephp:S121•"0Add curly braces around the nested statement(s).(Í‚¦
+Jphp:S121—"0Add curly braces around the nested statement(s).(ÀÊ«ğıÿÿÿÿ
+Ephp:S121¦"0Add curly braces around the nested statement(s).(Í‚¦
+Dphp:S121Á"0Add curly braces around the nested statement(s).(“•±}
+Ephp:S121Å"0Add curly braces around the nested statement(s).(À—§Ê
+Jphp:S121È"0Add curly braces around the nested statement(s).(¨Úıøşÿÿÿÿ
+Dphp:S121×"0Add curly braces around the nested statement(s).(“•±}
+Jphp:S121ı"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121û"0Add curly braces around the nested statement(s).(Ç¥ÉÑ
+Jphp:S121ÿ"0Add curly braces around the nested statement(s).(õò€¥şÿÿÿÿ
+Jphp:S121ˆ"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121†"0Add curly braces around the nested statement(s).(Ç¥ÉÑ
+Jphp:S121‹"0Add curly braces around the nested statement(s).(õò€¥şÿÿÿÿ
+Jphp:S121”"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121’"0Add curly braces around the nested statement(s).(Ç¥ÉÑ
+Ephp:S121 "0Add curly braces around the nested statement(s).(­é½–
+Jphp:S121©"0Add curly braces around the nested statement(s).(õò€¥şÿÿÿÿ
+Ephp:S121¸"0Add curly braces around the nested statement(s).(ƒ”©°
+Jphp:S121º"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121¶"0Add curly braces around the nested statement(s).(ä¯‡€şÿÿÿÿ
+Ephp:S121Ã"0Add curly braces around the nested statement(s).(ùİ€
+Ephp:S121Æ"0Add curly braces around the nested statement(s).(¨Ó´Â
+Jphp:S121É"0Add curly braces around the nested statement(s).(¤’Úùÿÿÿÿ
+Jphp:S121Ò"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Ğ"0Add curly braces around the nested statement(s).(§Åşõ
+Jphp:S121İ"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Û"0Add curly braces around the nested statement(s).(Ëç™
+Jphp:S121å"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121ç"0Add curly braces around the nested statement(s).(¨Ó´Â
+Ephp:S121é"0Add curly braces around the nested statement(s).(ê¨Æä
+Dphp:S121ì"0Add curly braces around the nested statement(s).(«î 
+Ephp:S121ó"0Add curly braces around the nested statement(s).(ŒÏ£·
+Ephp:S121÷"0Add curly braces around the nested statement(s).(õí­É
+Jphp:S121ú"0Add curly braces around the nested statement(s).(ŸĞ¾ùÿÿÿÿ
+Jphp:S121ı"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121†"0Add curly braces around the nested statement(s).(õò€¥şÿÿÿÿ
+Jphp:S121"0Add curly braces around the nested statement(s).(¦‹øÿÿÿÿ
+Jphp:S121‘"0Add curly braces around the nested statement(s).(õò€¥şÿÿÿÿ
+Dphp:S121 "0Add curly braces around the nested statement(s).( á¿n
+Ephp:S121¢"0Add curly braces around the nested statement(s).(´†‹
+Dphp:S121°"0Add curly braces around the nested statement(s).(Ş¬‚I
+Ephp:S121³"0Add curly braces around the nested statement(s).(‚ü¾ş
+Jphp:S121µ"0Add curly braces around the nested statement(s).(¿ÓË€şÿÿÿÿ
+Jphp:S121Ö"0Add curly braces around the nested statement(s).(‘¹ÕÆøÿÿÿÿ
+Jphp:S121İ"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Û"0Add curly braces around the nested statement(s).(‰å¥ú
+Ephp:S121å"0Add curly braces around the nested statement(s).(Ú„»
+Ephp:S121ç"0Add curly braces around the nested statement(s).(ßïèÇ
+Ephp:S121é"0Add curly braces around the nested statement(s).(Æç
+Dphp:S121ë"0Add curly braces around the nested statement(s).(º°1
+Dphp:S121ğ"0Add curly braces around the nested statement(s).(Ş¬‚I
+Ephp:S121ô"0Add curly braces around the nested statement(s).(¡½Ã»
+Jphp:S121ö"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121ò"0Add curly braces around the nested statement(s).(İçõÉşÿÿÿÿ
+Jphp:S121ø"0Add curly braces around the nested statement(s).(¿ÓË€şÿÿÿÿ
+Ephp:S121û"0Add curly braces around the nested statement(s).(êµìÿ
+Jphp:S121ı"0Add curly braces around the nested statement(s).(¿ÓË€şÿÿÿÿ
+Jphp:S121ÿ"0Add curly braces around the nested statement(s).(Åÿ«Åûÿÿÿÿ
+Ephp:S121‚"0Add curly braces around the nested statement(s).(›Úòñ
+Ephp:S121‰"0Add curly braces around the nested statement(s).(‰›øÏ
+Jphp:S121Œ"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Dphp:S121“"0Add curly braces around the nested statement(s).(Ş¬‚I
+Jphp:S121–"0Add curly braces around the nested statement(s).(‘¹ÕÆøÿÿÿÿ
+Jphp:S121›"0Add curly braces around the nested statement(s).(ÿ™ÄŞÿÿÿÿÿ
+Ephp:S121©"0Add curly braces around the nested statement(s).(Ú„»
+Ephp:S121«"0Add curly braces around the nested statement(s).(Æç
+Dphp:S121É"0Add curly braces around the nested statement(s).(Äƒâj
+Jphp:S121Ù"0Add curly braces around the nested statement(s).(µæ·ûÿÿÿÿ
+Dphp:S121ñ"0Add curly braces around the nested statement(s).(Äƒâj
+Jphp:S121ô"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121ı"0Add curly braces around the nested statement(s).(Ò¥Âùÿÿÿÿ
+Dphp:S121†"0Add curly braces around the nested statement(s).(Ş¬‚I
+Jphp:S121§"0Add curly braces around the nested statement(s).(‚şÖ¡úÿÿÿÿ
+Jphp:S121º"0Add curly braces around the nested statement(s).(µæ·ûÿÿÿÿ
+Jphp:S121Î"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Ò"0Add curly braces around the nested statement(s).(òì± 
+Jphp:S121Ü"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Ú"0Add curly braces around the nested statement(s).(ùŒäì
+Ephp:S121ã"0Add curly braces around the nested statement(s).(ùİ€
+Ephp:S121ë"0Add curly braces around the nested statement(s).(‹˜Àù
+Jphp:S121ğ"0Add curly braces around the nested statement(s).(ş“ğ³øÿÿÿÿ
+Jphp:S121ó"0Add curly braces around the nested statement(s).(ïé€üùÿÿÿÿ
+Jphp:S121ù"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121ƒ"0Add curly braces around the nested statement(s).(‚Ã±üÿÿÿÿ
+Jphp:S121…"0Add curly braces around the nested statement(s).(èÁûöıÿÿÿÿ
+Jphp:S121‡"0Add curly braces around the nested statement(s).(‘¹ÕÆøÿÿÿÿ
+Jphp:S121‰"0Add curly braces around the nested statement(s).(×ÑÂÈùÿÿÿÿ
+Ephp:S121š"0Add curly braces around the nested statement(s).(‰ªñ 
+Jphp:S121"0Add curly braces around the nested statement(s).(Åÿ«Åûÿÿÿÿ
+Jphp:S121¸"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121¶"0Add curly braces around the nested statement(s).(í·ë×
+Jphp:S121Ç"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Dphp:S121Å"0Add curly braces around the nested statement(s).(®Ûáq
+Jphp:S121É"0Add curly braces around the nested statement(s).(çëµüÿÿÿÿ
+Ephp:S121ß"0Add curly braces around the nested statement(s).(¬úÑˆ
+Ephp:S121á"0Add curly braces around the nested statement(s).(Ó£ï©
+Ephp:S121ı"0Add curly braces around the nested statement(s).(Øïöµ
+Jphp:S121"0Add curly braces around the nested statement(s).(ÔŞ×©ÿÿÿÿÿ
+Ephp:S121“"0Add curly braces around the nested statement(s).(‡î¯‡
+Jphp:S121›"0Add curly braces around the nested statement(s).(ÜÄ¡øÿÿÿÿ
+Jphp:S121¦"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121°"0Add curly braces around the nested statement(s).(†ÔñŒûÿÿÿÿ
+Jphp:S121¹"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121·"0Add curly braces around the nested statement(s).(¬½šõ
+Jphp:S121É"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121Ç"0Add curly braces around the nested statement(s).(ôı÷ûÿÿÿÿ
+Jphp:S121Í"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Ë"0Add curly braces around the nested statement(s).(¦Áœ­
+Jphp:S121â"0Add curly braces around the nested statement(s).(¬Áˆ¾ÿÿÿÿÿ
+Jphp:S121æ"0Add curly braces around the nested statement(s).(‡Ğ‹Îıÿÿÿÿ
+Jphp:S121õ"0Add curly braces around the nested statement(s).(®ê¾äıÿÿÿÿ
+Ephp:S121ø"0Add curly braces around the nested statement(s).(Íúú
+Jphp:S121ú"0Add curly braces around the nested statement(s).(£˜ÁÍÿÿÿÿÿ
+Ephp:S121ü"0Add curly braces around the nested statement(s).(‚Ò–›
+Ephp:S121‡	"0Add curly braces around the nested statement(s).(åö 
+Jphp:S121	"0Add curly braces around the nested statement(s).(¦ØÈ—şÿÿÿÿ
+Jphp:S121’	"0Add curly braces around the nested statement(s).(Ş‡ÏÜıÿÿÿÿ
+Jphp:S121–	"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121”	"0Add curly braces around the nested statement(s).(öîÛùÿÿÿÿ
+Jphp:S121À	"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121¾	"0Add curly braces around the nested statement(s).(¢Ö®‰
+Ephp:S121Ç	"0Add curly braces around the nested statement(s).(«À½Ï
+Jphp:S121Ù	"0Add curly braces around the nested statement(s).(ìÓİÁÿÿÿÿÿ
+Jphp:S121Û	"0Add curly braces around the nested statement(s).(‡ÛÕöúÿÿÿÿ
+Ephp:S121ß	"0Add curly braces around the nested statement(s).(òùòÄ
+Jphp:S121á	"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121İ	"0Add curly braces around the nested statement(s).(éë“¶ûÿÿÿÿ
+Ephp:S121ì	"0Add curly braces around the nested statement(s).(ÍÛÃ
+Jphp:S121ö	"0Add curly braces around the nested statement(s).(‘¥ÇÀşÿÿÿÿ
+Ephp:S121û	"0Add curly braces around the nested statement(s).(é Ü…
+Jphp:S121€
+"0Add curly braces around the nested statement(s).(®‰Áüÿÿÿÿ
+Jphp:S121…
+"0Add curly braces around the nested statement(s).(¤Ì„‹ûÿÿÿÿ
+Jphp:S121‡
+"0Add curly braces around the nested statement(s).(÷ïˆªıÿÿÿÿ
+Jphp:S121‰
+"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121ƒ
+"0Add curly braces around the nested statement(s).(ÖÖÁ§şÿÿÿÿ
+Ephp:S121‹
+"0Add curly braces around the nested statement(s).(ŞÚ‚ç
+Ephp:S121
+"0Add curly braces around the nested statement(s).(ŞÚ‚ç
+Ephp:S121
+"0Add curly braces around the nested statement(s).(ŞÚ‚ç
+Ephp:S121¨
+"0Add curly braces around the nested statement(s).(ÒÆ°Ø
+Ephp:S121­
+"0Add curly braces around the nested statement(s).(š¥Ëü
+Ephp:S121¦
+"0Add curly braces around the nested statement(s).(½ÂğË
+Ephp:S121¸
+"0Add curly braces around the nested statement(s).(º¦´Â
+Jphp:S121º
+"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121¿
+"0Add curly braces around the nested statement(s).(ŞæÇ 
+Ephp:S121Å
+"0Add curly braces around the nested statement(s).(ôÓ­¦
+Jphp:S121ê
+"0Add curly braces around the nested statement(s).(Îü„œşÿÿÿÿ
+Ephp:S121ø
+"0Add curly braces around the nested statement(s).(…Ü®Æ
+Jphp:S121ı
+"0Add curly braces around the nested statement(s).(İ¹Æ»ÿÿÿÿÿ
+Ephp:S121Œ"0Add curly braces around the nested statement(s).(“•®ä
+Jphp:S121"0Add curly braces around the nested statement(s).(ŸúÍ¨ÿÿÿÿÿ
+Jphp:S121‘"0Add curly braces around the nested statement(s).(ì‘šÙüÿÿÿÿ
+Ephp:S121™"0Add curly braces around the nested statement(s).(ÍÛÃ
+Ephp:S121§"0Add curly braces around the nested statement(s).(±¶ã€
+Jphp:S121©"0Add curly braces around the nested statement(s).(çÆáöúÿÿÿÿ
+Ephp:S121«"0Add curly braces around the nested statement(s).(”ù–©
+Ephp:S121¥"0Add curly braces around the nested statement(s).(âŸ³æ
+Jphp:S121¼"0Add curly braces around the nested statement(s).(‡Õ¨Ëùÿÿÿÿ
+Jphp:S121Ğ"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121Ş"0Add curly braces around the nested statement(s).(ªœ•—
+Jphp:S121à"0Add curly braces around the nested statement(s).(µ³ÿÿÿÿÿ
+Jphp:S121ò"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121ğ"0Add curly braces around the nested statement(s).( òŞâûÿÿÿÿ
+Ephp:S121ë"0Add curly braces around the nested statement(s).(¯¬Ô‹
+Ephp:S121ù"0Add curly braces around the nested statement(s).(ÙÇ“„
+Jphp:S121ş"0Add curly braces around the nested statement(s).(åş÷Œøÿÿÿÿ
+Ephp:S121†"0Add curly braces around the nested statement(s).(Ü±ìÊ
+Ephp:S121ˆ"0Add curly braces around the nested statement(s).(Ü±ìÊ
+Ephp:S121"0Add curly braces around the nested statement(s).(Ü±ìÊ
+Ephp:S121©"0Add curly braces around the nested statement(s).(ŠèØˆ
+Ephp:S121¬"0Add curly braces around the nested statement(s).(¼ĞÈ
+Jphp:S121¯"0Add curly braces around the nested statement(s).(‡‚©îùÿÿÿÿ
+Jphp:S121²"0Add curly braces around the nested statement(s).(Ş§€ªûÿÿÿÿ
+Jphp:S121Ê"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Ephp:S121È"0Add curly braces around the nested statement(s).(ÉÉÄ÷
+Jphp:S121×"0Add curly braces around the nested statement(s).(ıŠùÿÿÿÿ
+Jphp:S121à"0Add curly braces around the nested statement(s).(¥°û˜ıÿÿÿÿ
+Jphp:S121â"0Add curly braces around the nested statement(s).(Ïùêşÿÿÿÿ
+Jphp:S121ó"0Add curly braces around the nested statement(s).(„¶áìøÿÿÿÿ
+Jphp:S121ñ"0Add curly braces around the nested statement(s).(šö§§ùÿÿÿÿ
+Jphp:S121õ"0Add curly braces around the nested statement(s).(Ïùêşÿÿÿÿ
+Jphp:S121ı"0Add curly braces around the nested statement(s).(€µÒâÿÿÿÿÿ
+Ephp:S121„"0Add curly braces around the nested statement(s).(––‡
+Jphp:S121†"0Add curly braces around the nested statement(s).(¦ÜøÆûÿÿÿÿ
+Jphp:S121"0Add curly braces around the nested statement(s).(ïé€üùÿÿÿÿ
+Ephp:S121à"0Add curly braces around the nested statement(s).(äãÎ«
+Ephp:S121Û"0Add curly braces around the nested statement(s).(”—×
+Jphp:S121ä"0Add curly braces around the nested statement(s).(œğŒ‘ÿÿÿÿÿ
+Jphp:S121æ"0Add curly braces around the nested statement(s).( ‹çÿÿÿÿÿ
+Dphp:S121ë"0Add curly braces around the nested statement(s).(¼•ˆ;
+Ephp:S121ï"0Add curly braces around the nested statement(s).(â˜Œ”
+Ephp:S121ü"0Add curly braces around the nested statement(s).(”—×
+Jphp:S121‚"0Add curly braces around the nested statement(s).(ù¶¹‰úÿÿÿÿ
+Jphp:S121Š"0Add curly braces around the nested statement(s).(ıÆÀıÿÿÿÿ
+Dphp:S121¢"0Add curly braces around the nested statement(s).(Ò›Ë
+Jphp:S121­"0Add curly braces around the nested statement(s).(è¤³îùÿÿÿÿ
+Ephp:S121¯"0Add curly braces around the nested statement(s).(­åÜ×
+Jphp:S121±"0Add curly braces around the nested statement(s).(á³‡²ıÿÿÿÿ
+Ephp:S121«"0Add curly braces around the nested statement(s).(¶¾ú
+Ephp:S121µ"0Add curly braces around the nested statement(s).(­±µÎ
+Ephp:S121·"0Add curly braces around the nested statement(s).(›—³
+Dphp:S121³"0Add curly braces around the nested statement(s).(Éé£r
+Ephp:S121İ"0Add curly braces around the nested statement(s).(¾òòí
+u	php:S1488Å"ZImmediately return this expression instead of assigning it to the temporary variable "$s".(¨é¡úÿÿÿÿ
+[	php:S1117"ERename "$w" which has the same name as the field declared at line 30.(å’Ùú
+`	php:S1117˜"ERename "$n" which has the same name as the field declared at line 15.(æšĞ‚üÿÿÿÿ
+`	php:S1117Ã"ERename "$k" which has the same name as the field declared at line 21.(ÅÔª©şÿÿÿÿ
+[	php:S1117Ç"ERename "$x" which has the same name as the field declared at line 36.(‚¼ñÖ
+\	php:S1117È"FRename "$ws" which has the same name as the field declared at line 56.(²ø„ö
+`	php:S1117ä"ERename "$y" which has the same name as the field declared at line 36.(¦ÅÀ÷şÿÿÿÿ
+`	php:S1117‰"ERename "$w" which has the same name as the field declared at line 30.( ¬Ú÷ÿÿÿÿÿ
+`	php:S1117Ñ	"ERename "$w" which has the same name as the field declared at line 30.(ÃÂ£´üÿÿÿÿ
+`	php:S1117ı	"ERename "$w" which has the same name as the field declared at line 30.(¶Ì·¼ıÿÿÿÿ
+`	php:S1117ş	"ERename "$h" which has the same name as the field declared at line 30.(î™ªµÿÿÿÿÿ
+`	php:S1117š
+"ERename "$n" which has the same name as the field declared at line 15.(ĞàÖ£ûÿÿÿÿ
+`	php:S1117ñ"ERename "$h" which has the same name as the field declared at line 30.(£ÿ×¥ùÿÿÿÿ
+[	php:S1117†"ERename "$n" which has the same name as the field declared at line 15.(Ü±ìÊ
+`	php:S1117”"ERename "$w" which has the same name as the field declared at line 30.(ôş¾‘ûÿÿÿÿ
+`	php:S1117•"ERename "$h" which has the same name as the field declared at line 30.(Ä¼Åîúÿÿÿÿ
+[	php:S1117¨"ERename "$n" which has the same name as the field declared at line 15.(¥“ûØ

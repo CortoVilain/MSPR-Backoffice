@@ -163,9 +163,8 @@ if(isset($_POST['telecharger'])) {
 
 
 
-        $pdf->OutPut('F', 'C:/test.pdf', false);
-    header('Content-disposition: attachment; filename='.$pdf);
-    header('Content-Type: application/force-download');
+        $pdf->OutPut('D', 'C:/test.pdf', false);
+
 }
 
 
