@@ -51,6 +51,123 @@ if(isset($_POST['ajouter-questionnaire'])) {
     $req->execute();
 }
 
+if(isset($_POST['telecharger'])) {
+
+        require('librairie/fpdf.php');
+        $idQuestionnaire = $_POST['questionnaire'];
+        $idPharmacie = $_POST['pharmacie'];
+
+        $reqQuestionnaire = $bdd->prepare('SELECT libelle FROM questionnaire WHERE id_questionnaire = :idQuestionnaire');
+
+        $reqQuestionnaire->bindParam(':idQuestionnaire', $idQuestionnaire);
+
+        $reqQuestionnaire->execute();
+
+
+
+        $questionnaire = $reqQuestionnaire->fetch();
+
+
+
+        $pdf = new FPDF();
+
+        $pdf->AddPage();
+
+        $pdf->SetFont('Arial', 'B', '18');
+
+        $pdf->Cell(0, 0, $questionnaire['libelle'], 0);
+
+
+
+        $reqQuestions = $bdd->prepare('SELECT * FROM question WHERE id_questionnaire = :idQuestionnaire');
+
+        $reqQuestions->bindParam(':idQuestionnaire', $idQuestionnaire);
+
+        $reqQuestions->execute();
+
+
+
+        $questions = $reqQuestions->fetchAll();
+
+
+
+        foreach($questions as $question) {
+
+            $pdf->SetFont('Arial', '', '12');
+
+            $pdf->Cell(0, 0, $question['contenu'], 0);
+
+
+
+            if($question['question_ouverte']) {
+
+
+
+                $reqReponse = $bdd->prepare('SELECT contenu FROM reponse_ouverte WHERE id_question = :idQuestion AND id_pharmacie = :idPharmacie');
+
+                $reqReponse->bindParam(':idQuestion', $question['id_question']);
+
+                $reqReponse->bindParam(':idPharmacie', $idPharmacie);
+
+                $reqReponse->execute();
+
+
+
+                $reponse = $reqReponse->fetch();
+
+
+
+                $pdf->SetFont('Arial', 'u', '12');
+
+                $pdf->Cell(0, 0, $reponse['contenu'], 0);
+
+            } else {
+
+
+
+                $reqReponses = $bdd->prepare('SELECT * FROM reponse_choix_multiples WHERE id_question = :idQuestion AND id_pharmacie = :idPharmacie');
+
+                $reqReponses->bindParam(':idQuestion', $question['id_question']);
+
+                $reqReponses->bindParam(':idPharmacie', $idPharmacie);
+
+                $reqReponses->execute();
+
+
+
+                $reponses = $reqReponses->fetchAll();
+
+
+
+                foreach($reponses as $reponse) {
+
+                    if($reponse['is_checked']) {
+
+                        $pdf->SetFont('Arial', 'u', '12');
+
+                        $pdf->Cell(0, 0, $reponse['contenu'], 0);
+
+                    } else {
+
+                        $pdf->SetFont('Arial', '', '12');
+
+                        $pdf->Cell(0, 0, $reponse['contenu'], 0);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+
+
+        $pdf->OutPut('F', 'C:/test.pdf', false);
+    header('Content-disposition: attachment; filename='.$pdf);
+    header('Content-Type: application/force-download');
+}
+
 
 ?>
 
@@ -284,11 +401,18 @@ $data = $req->fetchAll();
                     <?php
                     foreach($data as $value) { ?>
                         <tr>
+
                             <td type="date" name="dateVisite"><?php echo $value['date']; ?></td>
                             <td type="text" name="pharmacie"><?php echo $value[6]; // nom de la pharmacie?></td>
                             <td type="text" name="dmo"><?php echo $value['login']?></td>
                             <td type="text" name="questionnaire"><?php echo $value['libelle']; // nom du questionnaire?></td>
-
+                            <td>
+                                <form method="post" action="Visites.php">
+                                    <input type="hidden" name="pharmacie" value="<?php echo $value['id_pharmacie']; ?>"/>
+                                    <input type="hidden" name="questionnaire" value="<?php echo $value['id_questionnaire']; ?>"/>
+                                    <input class="btn btn-info" type="submit" name="telecharger" value="Télécharger PDF" >
+                                </form>
+                            </td>
                         </tr>
                         <?php
                     }

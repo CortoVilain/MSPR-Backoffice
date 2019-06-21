@@ -34,12 +34,12 @@ if(isset($_POST['submit']) && isset($_POST['login'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
 
-	$req = $bdd->prepare("SELECT mdp FROM dmo WHERE login = :login");
+	$req = $bdd->prepare("SELECT password FROM dmo WHERE login = :login");
     $req->bindParam(":login", $login);
     $req->execute();
     $data = $req->fetch();
 
-    if($data['mdp'] == $password) {
+    if($data['password'] == $password) {
         header('Location: Dmo.php');
     }
 	else {
