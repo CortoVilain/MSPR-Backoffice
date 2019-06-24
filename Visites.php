@@ -456,9 +456,6 @@ foreach($data as $value) {
                         <td><textarea class="form-control" rows="1" name="question"></textarea></td>
                         <td>
                             <div class="radio">
-                                <label><input type="radio" name="optradio" id="simple">Simple</label>
-                            </div>
-                            <div class="radio">
                                 <label><input type="radio" name="optradio" id="multiple">Multiple</label>
                             </div>
                             <div class="radio">
