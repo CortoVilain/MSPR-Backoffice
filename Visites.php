@@ -271,7 +271,7 @@ $data = $req->fetchAll();
 
 foreach($data as $value) {
     ?>
-    <td><a href="#" class="btn btn-primary btn-affichage-questionnaire" data-toggle="modal" data-target="#questionnaire<?php echo $value['0']?>">Le nouveau questionnaire</a></td>
+    <td><a href="#" class="btn btn-primary btn-affichage-questionnaire" data-toggle="modal" data-target="#questionnaire<?php echo $value['0']?>"><?php echo $value['libelle']?></a></td>
 <?php } ?>
     </tr>
 </table>
@@ -451,8 +451,7 @@ foreach($data as $value) {
                     <td>Réponse</td>
                 </tr>
                 <tr>
-                    <div id="form">
-                    <form class="form-ajout-visite" method="post" action="Visites.php">
+                    <div id="question">
                         <td><textarea class="form-control" rows="1" name="question"></textarea></td>
                         <td>
                             <div class="radio">
@@ -465,13 +464,17 @@ foreach($data as $value) {
                         <td id="idTd">
 
                         </td>
-                        <td><input class="btn btn-success" type="submit" name="ajouter-question" value="Ajouter"  id="ajouter-question"/></td>
-                    </form>
+                        <td><input class="btn btn-success" type="button" value="Ajouter" id="ajouter-question"/></td>
                     </div>
                 </tr>
             </table>
+                <hr/>
                 <div>
+                    <table>
+                        <form class="form-ajout-visite" method="post" action="Visites.php" id="form">
 
+                        </form>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">

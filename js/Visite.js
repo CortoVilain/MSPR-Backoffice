@@ -22,8 +22,8 @@ jQuery('#multiple').click(function() {
         jQuery('#idTd').empty();
         jQuery('#idTd').append('<input type="text" class="form-control">\n' +
             '    <input type="text" class="form-control">\n' +
-            '<button type="button" class="btn btn-outline-dark btn-sm btn-rep">Ajouter</button>' +
-            '<button type="button" class="btn btn-outline-danger btn-sm btn-sup" style="display: none">Supprimer</button>');
+            '<button type="button" class="btn btn-outline-dark btn-sm btn-rep">+</button>' +
+            '<button type="button" class="btn btn-outline-danger btn-sm btn-sup" style="display: none">−</button>');
     }
     jQuery('.btn-rep').click(function() {
         jQuery('.btn-rep').before('  <input type="text" class="form-control reponse">');
@@ -44,7 +44,7 @@ jQuery('#libre').click(function() {
 });
 
 
-$("#ajouter-question").click(function(){
-    
+jQuery('#ajouter-question').click(function() {
+    jQuery('#question').clone().appendTo('#form');
 });
 
